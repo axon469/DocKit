@@ -49,21 +49,33 @@ Most online PDF and text utilities make you upload your files to someone else's 
 
 ## Quick start
 
-**Option 1 — open the file.** Download `index.html` and open it in any modern browser.
-
-**Option 2 — GitHub Pages (recommended).**
-1. Go to **Settings → Pages** in this repository.
-2. Under *Build and deployment*, choose **Deploy from a branch**, select **main** and **/ (root)**, then **Save**.
-3. After a minute your site is live at `https://axon469.github.io/DocKit/`.
-
-**Option 3 — run locally on your network** (handy for testing on a phone):
-
+### On a computer
+ 
+**Open the file.** Download `index.html` and open it in any modern browser. That's it.
+ 
+**Or serve it locally** (needs Python 3):
+ 
 ```bash
 python3 -m http.server 8080
-# then open http://<your-computer-ip>:8080/ on your phone
+# open http://localhost:8080
 ```
-
-> The first load needs an internet connection to fetch the open-source libraries listed under [Tech stack](#tech-stack). After that, everything runs locally.
+ 
+### Test on your Android phone with SHTTPS
+ 
+You can run DocKit on your phone without a computer by serving the files with the **SHTTPS** app, a small local web server for Android.
+ 
+1. **Install SHTTPS** on your Android phone from the Play Store.
+2. **Put the project on your phone.** Download this repository (**Code → Download ZIP**) and extract it, or copy `index.html` into a folder on your phone, for example `Download/DocKit/`.
+3. **Open SHTTPS** and choose that folder as the *root / web directory*, the one that contains `index.html`.
+4. **Start the server.** SHTTPS shows an address such as `http://192.168.1.6:8080`.
+5. **Open the address in Chrome** on the phone. On the same phone you can also use `http://localhost:8080` (use the port shown in the app).
+6. **To test from another device**, connect it to the same Wi-Fi network and open the address SHTTPS shows.
+Tips:
+ 
+- Keep SHTTPS running (and allow it in battery-saver settings) while you test.
+- **First load needs internet.** DocKit fetches its PDF libraries from a CDN the first time. The page is served locally, but those libraries still come from the internet.
+- After you edit `index.html`, pull down to refresh in Chrome. If you still see the old version, clear the site data.
+- Use **⋮ → Add to Home screen** in Chrome to launch DocKit like an app.
 
 ## What's inside
 
