@@ -15,7 +15,7 @@ subprocess.run([sys.executable, "gen_i18n.py"], cwd=src, check=True)
 
 # 2) concatenate everything into one self-contained HTML file
 order = ["core.js", "tools.js", "text-lib.js", "text-tools-a.js", "text-tools-b.js",
-         "stages.js", "settings.js", "i18n-bn.js", "ui-text.js", "ui.js"]
+         "stages.js", "settings.js", "history.js", "i18n-bn.js", "ui-text.js", "ui.js"]
 head = (src / "head.html").read_text(encoding="utf8")
 js = "\n".join((src / f).read_text(encoding="utf8") for f in order)
 assert "</script>" not in js, "a JS file contains a literal </script> — escape it as <\\/script>"
