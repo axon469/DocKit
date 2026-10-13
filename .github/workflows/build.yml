@@ -1,13 +1,21 @@
+
 name: Build DocKit APK
 
 on:
   workflow_dispatch:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    env:
+      KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+      KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+      KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+      KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+
     steps:
       - name: Check out source
         uses: actions/checkout@v4
@@ -23,11 +31,18 @@ jobs:
         with:
           gradle-version: '8.9'
 
-      - name: Build debug APK
-        run: gradle assembleDebug
+      - name: Prepare signing key
+        run: |
+          echo "$KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/dockit_release.jks"
+          test -s "$RUNNER_TEMP/dockit_release.jks"
+          echo "KEYSTORE_FILE=$RUNNER_TEMP/dockit_release.jks" >> "$GITHUB_ENV"
 
-      - name: Upload APK artifact
+      - name: Build signed release APK
+        run: gradle assembleRelease
+
+      - name: Upload signed APK
         uses: actions/upload-artifact@v4
         with:
-          name: DocKit-debug-apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: DocKit-release-apk
+          path: app/build/outputs/apk/release/app-release.apk
+          if-no-files-found: error
