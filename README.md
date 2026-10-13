@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="screenshots/DocKit_logo" alt="DocKit Logo" width="860">
+<img src="screenshots/DocKit_logo.png" alt="DocKit Logo" width="120">
 
 # DocKit
 
