@@ -3,7 +3,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:icon="@drawable/app_logo"
+        android:icon="@drawable/app_logo.png"
         android:allowBackup="true"
         android:label="DocKit"
         android:usesCleartextTraffic="false"
