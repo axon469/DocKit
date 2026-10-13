@@ -223,8 +223,10 @@ public class MainActivity extends Activity {
                         tag.replaceFirst("^[vV]", "").trim();
 
                 String currentVersion =
-                        BuildConfig.VERSION_NAME
-                                .replaceFirst("^[vV]", "").trim();
+        getPackageManager()
+                .getPackageInfo(getPackageName(), 0)
+                .versionName
+                .replaceFirst("^[vV]", "").trim();
 
                 if (latestVersion.isEmpty()
                         || releaseUrl.isEmpty()
