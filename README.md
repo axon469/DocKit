@@ -75,7 +75,6 @@ Tips:
 - Keep SHTTPS running (and allow it in battery-saver settings) while you test.
 - **First load needs internet.** DocKit fetches its PDF libraries from a CDN the first time. The page is served locally, but those libraries still come from the internet.
 - After you edit `index.html`, pull down to refresh in Chrome. If you still see the old version, clear the site data.
-- Use **⋮ → Add to Home screen** in Chrome to launch DocKit like an app.
 
 ## What's inside
 
@@ -472,7 +471,6 @@ Open **Settings** (gear icon on desktop, bottom bar on phones). Everything appli
 | **Catalogue** | List / Grid / Compact layout · show descriptions, icons, NEW badges, counts · Popular and Recently-used rows · start tab · hide categories |
 | **Language** | English or বাংলা · Bangla numerals |
 
-**Rename the app:** change `const APP_NAME = 'DocKit';` at the top of `src/core.js` (and the `<title>` in `src/head.html`), then run `python3 build.py`.
 
 ## Privacy & limitations
 
@@ -547,11 +545,14 @@ T('case', 'myTool', 'My Tool', 'What it does',
 
 ## Roadmap
 
-- [ ] Offline mode / installable PWA
+- [✅] Android Application
+- [✅] Favourite / pinned tools
 - [ ] OCR for scanned PDFs
 - [ ] Compare two PDFs
 - [ ] More interface languages
-- [ ] Favourite / pinned tools
+- [ ] Privacy & Local Storage
+- [ ] Additional Browser-Based Tools
+- [ ] Advanced Tools Requiring a Server 
 
 Ideas and pull requests are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).
 
