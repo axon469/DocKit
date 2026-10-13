@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="screenshots/DocKit_logo" alt="DocKit Logo" width="860">
+
 # DocKit
 
 **Every PDF & text tool you need — with zero uploads.**
