@@ -1,4 +1,4 @@
-```gradle
+gradle
 plugins {
     id 'com.android.application'
 }
