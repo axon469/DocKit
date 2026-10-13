@@ -547,14 +547,18 @@ T('case', 'myTool', 'My Tool', 'What it does',
 
 ## Roadmap
 
-- [✅] Android Application
-- [✅] Favourite / pinned tools
+- [x] Android Application
+- [x] Favourite / pinned tools
+- [ ] Restructure Settings
+- [ ] Fix Light Mode / about setting
+- [ ] Premium UI and design / Animation 
 - [ ] OCR for scanned PDFs
 - [ ] Compare two PDFs
 - [ ] More interface languages
 - [ ] Privacy & Local Storage
 - [ ] Additional Browser-Based Tools
 - [ ] Advanced Tools Requiring a Server 
+- [ ] Media Hub Music & Video Player
 
 Ideas and pull requests are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).
 
