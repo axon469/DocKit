@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
@@ -28,7 +29,6 @@ import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONObject;
 
@@ -37,7 +37,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Base64;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -45,7 +44,6 @@ public class MainActivity extends Activity {
 
     private WebView webView;
     private ValueCallback<Uri[]> filePathCallback;
-
     private static final int FILE_CHOOSER_REQUEST = 4102;
 
     private static final String RELEASE_API =
@@ -56,12 +54,32 @@ public class MainActivity extends Activity {
 
     private boolean updateDialogShowing = false;
 
-    private final int BG = Color.rgb(13, 16, 24);
-    private final int CARD = Color.rgb(25, 30, 43);
-    private final int ACCENT = Color.rgb(124, 92, 255);
-    private final int WHITE = Color.rgb(248, 249, 255);
-    private final int MUTED = Color.rgb(164, 173, 194);
-    private final int GREEN = Color.rgb(69, 211, 151);
+    private int dp(float value) {
+        return (int) (value * getResources()
+                .getDisplayMetrics().density + 0.5f);
+    }
+
+    private boolean isDark() {
+        return (getResources().getConfiguration().uiMode
+                & Configuration.UI_MODE_NIGHT_MASK)
+                == Configuration.UI_MODE_NIGHT_YES;
+    }
+
+    private int backgroundColor() {
+        return isDark() ? Color.rgb(27, 25, 39) : Color.WHITE;
+    }
+
+    private int foregroundColor() {
+        return isDark() ? Color.rgb(248, 246, 255)
+                : Color.rgb(49, 45, 68);
+    }
+
+    private int mutedColor() {
+        return isDark() ? Color.rgb(190, 188, 208)
+                : Color.rgb(92, 88, 110);
+    }
+
+    private final int purple = Color.rgb(132, 78, 230);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,18 +107,13 @@ public class MainActivity extends Activity {
             public boolean shouldOverrideUrlLoading(
                     WebView view, WebResourceRequest request) {
 
-                Uri uri = request.getUrl();
-                String scheme = uri.getScheme();
+                String scheme = request.getUrl().getScheme();
 
-                if ("http".equalsIgnoreCase(scheme)
+                return !("http".equalsIgnoreCase(scheme)
                         || "https".equalsIgnoreCase(scheme)
                         || "file".equalsIgnoreCase(scheme)
                         || "blob".equalsIgnoreCase(scheme)
-                        || "content".equalsIgnoreCase(scheme)) {
-                    return false;
-                }
-
-                return true;
+                        || "content".equalsIgnoreCase(scheme));
             }
         });
 
@@ -122,12 +135,13 @@ public class MainActivity extends Activity {
 
                 intent.addCategory(Intent.CATEGORY_OPENABLE);
                 intent.setType("*/*");
-                intent.putExtra(Intent.EXTRA_MIME_TYPES, new String[]{
-                        "application/pdf",
-                        "image/*",
-                        "text/*",
-                        "application/*"
-                });
+                intent.putExtra(Intent.EXTRA_MIME_TYPES,
+                        new String[]{
+                                "application/pdf",
+                                "image/*",
+                                "text/*",
+                                "application/*"
+                        });
                 intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
 
                 try {
@@ -135,11 +149,9 @@ public class MainActivity extends Activity {
                             intent, FILE_CHOOSER_REQUEST);
                 } catch (Exception e) {
                     filePathCallback = null;
-                    showNotice(
-                            "File picker unavailable",
+                    showNotice("File picker unavailable",
                             "Your device could not open the file picker.",
-                            "OK",
-                            null);
+                            "OK", null);
                     return false;
                 }
 
@@ -156,43 +168,32 @@ public class MainActivity extends Activity {
         checkForUpdates();
     }
 
-    // -------------------------------------------------
-    // PREMIUM UPDATE CHECKER
-    // -------------------------------------------------
+    // GITHUB UPDATE CHECKER
 
     private void checkForUpdates() {
         updateExecutor.execute(() -> {
             HttpURLConnection connection = null;
 
             try {
-                URL url = new URL(RELEASE_API);
-
-                connection =
-                        (HttpURLConnection) url.openConnection();
+                connection = (HttpURLConnection)
+                        new URL(RELEASE_API).openConnection();
 
                 connection.setRequestMethod("GET");
                 connection.setConnectTimeout(8000);
                 connection.setReadTimeout(8000);
-
                 connection.setRequestProperty(
                         "Accept", "application/vnd.github+json");
-
                 connection.setRequestProperty(
                         "User-Agent", "DocKit-Android");
 
-                if (connection.getResponseCode() != 200) {
-                    return;
-                }
+                if (connection.getResponseCode() != 200) return;
 
                 StringBuilder response = new StringBuilder();
 
-                try (BufferedReader reader =
-                             new BufferedReader(
-                                     new InputStreamReader(
-                                             connection.getInputStream()))) {
-
+                try (BufferedReader reader = new BufferedReader(
+                        new InputStreamReader(
+                                connection.getInputStream()))) {
                     String line;
-
                     while ((line = reader.readLine()) != null) {
                         response.append(line);
                     }
@@ -206,27 +207,16 @@ public class MainActivity extends Activity {
                     return;
                 }
 
-                String tag =
-                        release.optString("tag_name", "");
-
-                String title =
-                        release.optString("name", "");
-
-                String notes =
-                        release.optString(
-                                "body", "No release notes provided.");
-
-                String releaseUrl =
-                        release.optString("html_url", "");
+                String tag = release.optString("tag_name", "");
+                String notes = release.optString("body", "");
+                String releaseUrl = release.optString("html_url", "");
 
                 String latestVersion =
                         tag.replaceFirst("^[vV]", "").trim();
 
-                String currentVersion =
-        getPackageManager()
-                .getPackageInfo(getPackageName(), 0)
-                .versionName
-                .replaceFirst("^[vV]", "").trim();
+                String currentVersion = getPackageManager()
+                        .getPackageInfo(getPackageName(), 0)
+                        .versionName.replaceFirst("^[vV]", "").trim();
 
                 if (latestVersion.isEmpty()
                         || releaseUrl.isEmpty()
@@ -235,58 +225,41 @@ public class MainActivity extends Activity {
                     return;
                 }
 
-                SharedPreferences preferences =
+                SharedPreferences prefs =
                         getSharedPreferences(
                                 "dockit_updates", MODE_PRIVATE);
 
-                String dismissedVersion =
-                        preferences.getString(
-                                "dismissed_version", "");
-
-                if (latestVersion.equals(dismissedVersion)) {
+                if (latestVersion.equals(
+                        prefs.getString("dismissed_version", ""))) {
                     return;
                 }
 
                 runOnUiThread(() -> {
-                    if (!isFinishing()
-                            && !isDestroyed()) {
+                    if (!isFinishing() && !isDestroyed()) {
                         showUpdateDialog(
-                                latestVersion,
-                                title,
-                                notes,
-                                releaseUrl);
+                                latestVersion, notes, releaseUrl);
                     }
                 });
 
             } catch (Exception ignored) {
-                // Network errors must not prevent DocKit from opening.
+                // Network errors must not stop DocKit opening.
             } finally {
-                if (connection != null) {
-                    connection.disconnect();
-                }
+                if (connection != null) connection.disconnect();
             }
         });
     }
 
-    private boolean isNewerVersion(
-            String latest, String current) {
-
+    private boolean isNewerVersion(String latest, String current) {
         try {
-            String[] latestParts = latest.split("\\.");
-            String[] currentParts = current.split("\\.");
+            String[] a = latest.split("\\.");
+            String[] b = current.split("\\.");
 
-            int count = Math.max(
-                    latestParts.length, currentParts.length);
+            for (int i = 0; i < Math.max(a.length, b.length); i++) {
+                int av = i < a.length ? versionNumber(a[i]) : 0;
+                int bv = i < b.length ? versionNumber(b[i]) : 0;
 
-            for (int i = 0; i < count; i++) {
-                int a = i < latestParts.length
-                        ? versionNumber(latestParts[i]) : 0;
-
-                int b = i < currentParts.length
-                        ? versionNumber(currentParts[i]) : 0;
-
-                if (a > b) return true;
-                if (a < b) return false;
+                if (av > bv) return true;
+                if (av < bv) return false;
             }
         } catch (Exception ignored) {
             return false;
@@ -297,169 +270,122 @@ public class MainActivity extends Activity {
 
     private int versionNumber(String part) {
         String digits = part.replaceAll("[^0-9].*$", "");
-
-        return digits.isEmpty()
-                ? 0 : Integer.parseInt(digits);
+        return digits.isEmpty() ? 0 : Integer.parseInt(digits);
     }
 
-    // -------------------------------------------------
-    // PREMIUM UPDATE POPUP
-    // -------------------------------------------------
+    // REDESIGNED UPDATE POPUP
 
     private void showUpdateDialog(
-            String version,
-            String title,
-            String notes,
-            String releaseUrl) {
+            String version, String notes, String releaseUrl) {
 
-        if (updateDialogShowing
-                || isFinishing()
-                || isDestroyed()) {
+        if (updateDialogShowing || isFinishing() || isDestroyed()) {
             return;
         }
 
         updateDialogShowing = true;
+
+        int bg = backgroundColor();
+        int fg = foregroundColor();
+        int muted = mutedColor();
+        boolean dark = isDark();
 
         Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         LinearLayout card = new LinearLayout(this);
         card.setOrientation(LinearLayout.VERTICAL);
-        card.setPadding(dp(24), dp(25), dp(24), dp(22));
-        card.setBackground(rounded(CARD, 28));
+        card.setPadding(dp(20), dp(18), dp(20), dp(18));
+        card.setBackground(rounded(bg, 26));
 
-        // Header icon
-        TextView icon = text(
-                "↑", 34, WHITE, true);
+        // Rocket illustration panel
 
-        icon.setGravity(Gravity.CENTER);
+        LinearLayout hero = new LinearLayout(this);
+        hero.setGravity(Gravity.CENTER);
+        hero.setOrientation(LinearLayout.VERTICAL);
+        hero.setBackground(rounded(
+                dark ? Color.rgb(39, 27, 60)
+                        : Color.rgb(215, 194, 255), 22));
 
-        GradientDrawable iconBg =
-                rounded(ACCENT, 22);
+        TextView stars = makeText(
+                "✦       ·       ✧       ·       ✦",
+                16, dark ? Color.WHITE : Color.rgb(103, 69, 164), false);
+        stars.setGravity(Gravity.CENTER);
+        hero.addView(stars, new LinearLayout.LayoutParams(-1, dp(27)));
 
-        icon.setBackground(iconBg);
-        icon.setElevation(dp(4));
+        TextView rocket = makeText("🚀", 55, fg, false);
+        rocket.setGravity(Gravity.CENTER);
+        hero.addView(rocket, new LinearLayout.LayoutParams(-1, dp(88)));
 
-        LinearLayout.LayoutParams iconParams =
-                new LinearLayout.LayoutParams(
-                        dp(76), dp(76));
+        LinearLayout.LayoutParams heroParams =
+                new LinearLayout.LayoutParams(-1, dp(135));
+        heroParams.bottomMargin = dp(18);
+        card.addView(hero, heroParams);
 
-        iconParams.gravity = Gravity.CENTER_HORIZONTAL;
-        iconParams.bottomMargin = dp(20);
+        // Status badge
 
-        card.addView(icon, iconParams);
-
-        // Small status label
-        TextView badge = text(
-                "  NEW VERSION AVAILABLE  ",
-                11, GREEN, true);
-
+        TextView badge = makeText(
+                "UPDATE REQUIRED", 11,
+                Color.rgb(39, 180, 128), true);
         badge.setGravity(Gravity.CENTER);
-
-        GradientDrawable badgeBg =
-                rounded(Color.rgb(28, 65, 57), 30);
-
-        badge.setBackground(badgeBg);
-        badge.setPadding(
-                dp(10), dp(8), dp(10), dp(8));
+        badge.setPadding(dp(14), dp(8), dp(14), dp(8));
+        badge.setBackground(rounded(
+                dark ? Color.rgb(26, 67, 56)
+                        : Color.rgb(225, 249, 238), 30));
 
         LinearLayout.LayoutParams badgeParams =
-                new LinearLayout.LayoutParams(
-                        -2, -2);
-
+                new LinearLayout.LayoutParams(-2, -2);
         badgeParams.gravity = Gravity.CENTER_HORIZONTAL;
         badgeParams.bottomMargin = dp(13);
-
         card.addView(badge, badgeParams);
 
-        // Main title
-        TextView heading = text(
-                "Time to upgrade",
-                25, WHITE, true);
-
+        TextView heading = makeText(
+                "Update Required", 23, fg, true);
         heading.setGravity(Gravity.CENTER);
-
         card.addView(heading, matchWrap());
 
-        TextView subtitle = text(
-                "Discover what's new in DocKit.",
-                14, MUTED, false);
-
+        TextView subtitle = makeText(
+                "For a better, faster, and more secure experience, "
+                        + "install the latest version of the application.",
+                14, muted, false);
         subtitle.setGravity(Gravity.CENTER);
-        subtitle.setPadding(0, dp(9), 0, dp(19));
-
+        subtitle.setLineSpacing(dp(4), 1f);
+        subtitle.setPadding(dp(2), dp(10), dp(2), dp(18));
         card.addView(subtitle, matchWrap());
 
-        // Version information
-        LinearLayout versionRow =
-                new LinearLayout(this);
+        // What's new
 
-        versionRow.setGravity(Gravity.CENTER);
-        versionRow.setOrientation(LinearLayout.HORIZONTAL);
-        versionRow.setPadding(
-                dp(15), dp(13), dp(15), dp(13));
+        TextView section = makeText("WHAT'S NEW", 13, fg, true);
+        section.setPadding(0, 0, 0, dp(9));
+        card.addView(section, matchWrap());
 
-        versionRow.setBackground(
-                rounded(Color.rgb(35, 42, 59), 16));
-
-        TextView versionLabel = text(
-                "LATEST VERSION",
-                11, MUTED, true);
-
-        TextView versionValue = text(
-                "v" + version,
-                15, WHITE, true);
-
-        versionRow.addView(
-                versionLabel,
-                new LinearLayout.LayoutParams(
-                        0, -2, 1));
-
-        versionRow.addView(
-                versionValue, wrapWrap());
-
-        LinearLayout.LayoutParams rowParams =
-                new LinearLayout.LayoutParams(
-                        -1, -2);
-
-        rowParams.bottomMargin = dp(17);
-
-        card.addView(versionRow, rowParams);
-
-        // Release notes heading
-        TextView notesHeading = text(
-                "WHAT'S NEW",
-                12, WHITE, true);
-
-        notesHeading.setPadding(0, 0, 0, dp(9));
-
-        card.addView(notesHeading, matchWrap());
-
-        // Scrollable release notes
-        TextView notesText = text(
-                cleanNotes(notes),
-                14, MUTED, false);
-
-        notesText.setLineSpacing(dp(3), 1f);
+        TextView releaseNotes = makeText(
+                formatNotes(notes), 14, muted, false);
+        releaseNotes.setGravity(Gravity.TOP | Gravity.START);
+        releaseNotes.setLineSpacing(dp(5), 1f);
 
         ScrollView scroll = new ScrollView(this);
         scroll.setFillViewport(false);
-        scroll.setOverScrollMode(View.OVER_SCROLL_IF_CONTENT_SCROLLS);
-
-        scroll.addView(notesText);
+        scroll.setVerticalScrollBarEnabled(false);
+        scroll.addView(releaseNotes);
 
         LinearLayout.LayoutParams scrollParams =
-                new LinearLayout.LayoutParams(
-                        -1, dp(115));
-
-        scrollParams.bottomMargin = dp(22);
-
+                new LinearLayout.LayoutParams(-1, dp(105));
+        scrollParams.bottomMargin = dp(17);
         card.addView(scroll, scrollParams);
 
-        // Primary button
-        TextView updateButton = button(
-                "Update Now  →", ACCENT, WHITE);
+        // Main purple button
 
+        TextView updateButton = makeButton(
+                "Update Application   →", Color.WHITE);
+
+        GradientDrawable gradient = new GradientDrawable(
+                GradientDrawable.Orientation.LEFT_RIGHT,
+                new int[]{
+                        Color.rgb(177, 137, 255),
+                        Color.rgb(124, 65, 218)
+                });
+        gradient.setCornerRadius(dp(14));
+        updateButton.setBackground(gradient);
         card.addView(updateButton, buttonParams());
 
         updateButton.setOnClickListener(v -> {
@@ -467,59 +393,50 @@ public class MainActivity extends Activity {
             openReleasePage(releaseUrl);
         });
 
-        // Secondary button
-        TextView laterButton = button(
-                "Update Later", CARD, MUTED);
+        // Outlined reminder button
 
-        LinearLayout.LayoutParams laterParams =
-                buttonParams();
+        TextView laterButton = makeButton(
+                "Remind me later", purple);
 
+        GradientDrawable outline = rounded(bg, 14);
+        outline.setStroke(dp(1), purple);
+        laterButton.setBackground(outline);
+
+        LinearLayout.LayoutParams laterParams = buttonParams();
         laterParams.topMargin = dp(10);
-
         card.addView(laterButton, laterParams);
 
         laterButton.setOnClickListener(v -> {
-            getSharedPreferences(
-                    "dockit_updates", MODE_PRIVATE)
+            getSharedPreferences("dockit_updates", MODE_PRIVATE)
                     .edit()
                     .putString("dismissed_version", version)
                     .apply();
-
             dialog.dismiss();
         });
 
         dialog.setContentView(card);
 
         Window window = dialog.getWindow();
-
         if (window != null) {
             window.setBackgroundDrawableResource(
                     android.R.color.transparent);
-
             window.addFlags(
                     WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 
-            WindowManager.LayoutParams params =
-                    window.getAttributes();
-
-            params.width = getResources()
-                    .getDisplayMetrics().widthPixels
+            WindowManager.LayoutParams params = window.getAttributes();
+            params.width = getResources().getDisplayMetrics().widthPixels
                     - dp(32);
-
             params.height = WindowManager.LayoutParams.WRAP_CONTENT;
             params.gravity = Gravity.CENTER;
             params.dimAmount = 0.72f;
-
             window.setAttributes(params);
         }
 
         dialog.setCancelable(true);
         dialog.setOnDismissListener(
                 d -> updateDialogShowing = false);
-
         dialog.show();
 
-        // Apply sizing after showing on different devices.
         if (window != null) {
             window.setLayout(
                     getResources().getDisplayMetrics().widthPixels
@@ -528,15 +445,22 @@ public class MainActivity extends Activity {
         }
     }
 
-    private String cleanNotes(String notes) {
+    private String formatNotes(String notes) {
         if (notes == null || notes.trim().isEmpty()) {
-            return "Bug fixes and improvements.";
+            return "• Improved performance\n\n"
+                    + "• Bug fixes and stability improvements\n\n"
+                    + "• General improvements";
         }
 
-        String result = notes.trim();
+        String result = notes.trim()
+                .replaceAll("(?m)^#{1,6}\\s*", "")
+                .replaceAll("(?m)^\\s*[-*+]\\s+", "• ")
+                .replaceAll("(?m)^\\s*\\d+\\.\\s+", "• ")
+                .replaceAll("\\*\\*(.*?)\\*\\*", "$1")
+                .replaceAll("__(.*?)__", "$1");
 
-        if (result.length() > 1600) {
-            result = result.substring(0, 1600) + "\n\n…";
+        if (result.length() > 900) {
+            result = result.substring(0, 900) + "…";
         }
 
         return result;
@@ -544,29 +468,20 @@ public class MainActivity extends Activity {
 
     private void openReleasePage(String releaseUrl) {
         try {
-            Intent intent = new Intent(
-                    Intent.ACTION_VIEW, Uri.parse(releaseUrl));
-
-            startActivity(intent);
-
+            startActivity(new Intent(
+                    Intent.ACTION_VIEW, Uri.parse(releaseUrl)));
         } catch (Exception e) {
-            showNotice(
-                    "Unable to open link",
+            showNotice("Unable to open link",
                     "Please open the DocKit release page in your browser.",
-                    "OK",
-                    null);
+                    "OK", null);
         }
     }
 
-    // -------------------------------------------------
-    // PREMIUM MESSAGE DIALOGS
-    // -------------------------------------------------
+    // GENERAL MESSAGE DIALOG
 
     private void showNotice(
-            String title,
-            String message,
-            String buttonText,
-            Runnable action) {
+            String title, String message,
+            String buttonText, Runnable action) {
 
         if (isFinishing() || isDestroyed()) return;
 
@@ -576,53 +491,41 @@ public class MainActivity extends Activity {
         LinearLayout card = new LinearLayout(this);
         card.setOrientation(LinearLayout.VERTICAL);
         card.setPadding(dp(24), dp(24), dp(24), dp(22));
-        card.setBackground(rounded(CARD, 24));
+        card.setBackground(rounded(backgroundColor(), 24));
 
-        TextView heading = text(title, 21, WHITE, true);
+        TextView heading = makeText(
+                title, 21, foregroundColor(), true);
         heading.setPadding(0, 0, 0, dp(12));
-
         card.addView(heading, matchWrap());
 
-        TextView body = text(message, 14, MUTED, false);
+        TextView body = makeText(
+                message, 14, mutedColor(), false);
         body.setLineSpacing(dp(3), 1f);
         body.setPadding(0, 0, 0, dp(22));
-
         card.addView(body, matchWrap());
 
-        TextView ok = button(buttonText, ACCENT, WHITE);
-
+        TextView ok = makeButton(buttonText, Color.WHITE);
+        ok.setBackground(rounded(purple, 14));
         card.addView(ok, buttonParams());
 
         ok.setOnClickListener(v -> {
             dialog.dismiss();
-
-            if (action != null) {
-                action.run();
-            }
+            if (action != null) action.run();
         });
 
         dialog.setContentView(card);
 
         Window window = dialog.getWindow();
-
         if (window != null) {
             window.setBackgroundDrawableResource(
                     android.R.color.transparent);
-
             window.addFlags(
                     WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-
-            WindowManager.LayoutParams params =
-                    window.getAttributes();
-
-            params.width = getResources()
-                    .getDisplayMetrics().widthPixels - dp(40);
-
-            params.height =
-                    WindowManager.LayoutParams.WRAP_CONTENT;
-
-            params.dimAmount = 0.65f;
-            window.setAttributes(params);
+            window.setDimAmount(0.65f);
+            window.setLayout(
+                    getResources().getDisplayMetrics().widthPixels
+                            - dp(40),
+                    WindowManager.LayoutParams.WRAP_CONTENT);
         }
 
         dialog.show();
@@ -635,49 +538,34 @@ public class MainActivity extends Activity {
         }
     }
 
-    // -------------------------------------------------
     // UI HELPERS
-    // -------------------------------------------------
 
-    private TextView text(
+    private TextView makeText(
             String value, int size, int color, boolean bold) {
-
         TextView view = new TextView(this);
-
         view.setText(value);
         view.setTextSize(size);
         view.setTextColor(color);
         view.setGravity(Gravity.CENTER_VERTICAL);
-        view.setTypeface(
-                Typeface.create(
-                        "sans-serif",
-                        bold ? Typeface.BOLD : Typeface.NORMAL));
-
+        view.setTypeface(Typeface.create(
+                "sans-serif", bold ? Typeface.BOLD : Typeface.NORMAL));
         return view;
     }
 
-    private TextView button(
-            String label, int background, int foreground) {
-
-        TextView view = text(label, 15, foreground, true);
+    private TextView makeButton(String label, int foreground) {
+        TextView view = makeText(label, 15, foreground, true);
         view.setGravity(Gravity.CENTER);
-        view.setPadding(
-                dp(12), dp(15), dp(12), dp(15));
-
-        view.setBackground(rounded(background, 15));
+        view.setPadding(dp(12), dp(15), dp(12), dp(15));
+        view.setBackground(rounded(purple, 14));
         view.setClickable(true);
         view.setFocusable(true);
-
         return view;
     }
 
-    private GradientDrawable rounded(
-            int color, int radius) {
-
+    private GradientDrawable rounded(int color, int radius) {
         GradientDrawable shape = new GradientDrawable();
         shape.setColor(color);
         shape.setCornerRadius(dp(radius));
-
         return shape;
     }
 
@@ -687,37 +575,21 @@ public class MainActivity extends Activity {
                 ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
-    private LinearLayout.LayoutParams wrapWrap() {
-        return new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-    }
-
     private LinearLayout.LayoutParams buttonParams() {
         return new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
-    private int dp(int value) {
-        return (int) (value * getResources()
-                .getDisplayMetrics().density + 0.5f);
-    }
-
-    // -------------------------------------------------
-    // FILE PICKER
-    // -------------------------------------------------
+    // FILE PICKER RESULT
 
     @Override
     protected void onActivityResult(
             int requestCode, int resultCode, Intent data) {
-
-        super.onActivityResult(
-                requestCode, resultCode, data);
+        super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == FILE_CHOOSER_REQUEST
                 && filePathCallback != null) {
-
             Uri[] results = null;
 
             if (resultCode == RESULT_OK && data != null) {
@@ -726,10 +598,9 @@ public class MainActivity extends Activity {
                     results = new Uri[count];
 
                     for (int i = 0; i < count; i++) {
-                        results[i] =
-                                data.getClipData().getItemAt(i).getUri();
+                        results[i] = data.getClipData()
+                                .getItemAt(i).getUri();
                     }
-
                 } else if (data.getData() != null) {
                     results = new Uri[]{data.getData()};
                 }
@@ -742,10 +613,7 @@ public class MainActivity extends Activity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        if (webView != null) {
-            webView.saveState(outState);
-        }
-
+        if (webView != null) webView.saveState(outState);
         super.onSaveInstanceState(outState);
     }
 
@@ -761,12 +629,14 @@ public class MainActivity extends Activity {
     @Override
     protected void onDestroy() {
         updateExecutor.shutdownNow();
+        if (webView != null) {
+            webView.destroy();
+            webView = null;
+        }
         super.onDestroy();
     }
 
-    // -------------------------------------------------
     // DOWNLOAD BRIDGE
-    // -------------------------------------------------
 
     private class DownloadBridge {
 
@@ -776,14 +646,8 @@ public class MainActivity extends Activity {
 
             runOnUiThread(() -> {
                 try {
-                    byte[] bytes;
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        bytes = Base64.getDecoder().decode(encoded);
-                    } else {
-                        bytes = android.util.Base64.decode(
-                                encoded, android.util.Base64.DEFAULT);
-                    }
+                    byte[] bytes = android.util.Base64.decode(
+                            encoded, android.util.Base64.DEFAULT);
 
                     String safeName = filename == null
                             ? "DocKit-download"
@@ -795,13 +659,9 @@ public class MainActivity extends Activity {
                     }
 
                     ContentValues values = new ContentValues();
-
-                    values.put(
-                            MediaStore.MediaColumns.DISPLAY_NAME,
+                    values.put(MediaStore.MediaColumns.DISPLAY_NAME,
                             safeName);
-
-                    values.put(
-                            MediaStore.MediaColumns.MIME_TYPE,
+                    values.put(MediaStore.MediaColumns.MIME_TYPE,
                             mimeType(safeName));
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -815,40 +675,30 @@ public class MainActivity extends Activity {
                                     ? MediaStore.Downloads.EXTERNAL_CONTENT_URI
                                     : MediaStore.Files.getContentUri("external");
 
-                    Uri fileUri =
-                            getContentResolver().insert(
-                                    collection, values);
+                    Uri fileUri = getContentResolver().insert(
+                            collection, values);
 
                     if (fileUri == null) {
-                        throw new Exception(
-                                "Could not create download file");
+                        throw new Exception("Could not create download file");
                     }
 
                     try (OutputStream output =
                                  getContentResolver().openOutputStream(fileUri)) {
-
                         if (output == null) {
-                            throw new Exception(
-                                    "Could not open download file");
+                            throw new Exception("Could not open download file");
                         }
-
                         output.write(bytes);
                     }
 
-                    showNotice(
-                            "Download complete",
-                            safeName
-                                    + "\n\nYour file has been saved to Downloads.",
-                            "Great!",
-                            null);
+                    showNotice("Download complete",
+                            safeName + "\n\nYour file has been saved to Downloads.",
+                            "Great!", null);
 
                 } catch (Exception e) {
-                    showNotice(
-                            "Download failed",
+                    showNotice("Download failed",
                             "DocKit couldn't save this file.\n\n"
                                     + e.getMessage(),
-                            "OK",
-                            null);
+                            "OK", null);
                 }
             });
         }
@@ -861,8 +711,7 @@ public class MainActivity extends Activity {
         if (lower.endsWith(".zip")) return "application/zip";
         if (lower.endsWith(".png")) return "image/png";
 
-        if (lower.endsWith(".jpg")
-                || lower.endsWith(".jpeg")) {
+        if (lower.endsWith(".jpg") || lower.endsWith(".jpeg")) {
             return "image/jpeg";
         }
 
