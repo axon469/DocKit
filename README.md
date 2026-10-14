@@ -585,7 +585,9 @@ T('case', 'myTool', 'My Tool', 'What it does',
 - [ ] Advanced Tools Requiring a Server 
 - [ ] Media Hub Music & Video Player
 
-Ideas and pull requests are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md). Release history is in [CHANGELOG.md](CHANGELOG.md).
+Ideas and pull requests are welcome — see [CONTRIBUTING.md](CONTRIBUTING.md). 
+
+Release history is in [CHANGELOG.md](CHANGELOG.md).
 
 ## Browser support
 
