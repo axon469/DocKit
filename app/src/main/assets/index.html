@@ -63,7 +63,8 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.75;str
 .btn:hover{border-color:var(--ink2);background:var(--surface2)}
 .btn.pri{background:var(--acc);border-color:var(--acc);color:var(--on-acc);box-shadow:0 1px 0 rgba(255,255,255,.18) inset,0 4px 14px -4px var(--acc)}
 .btn.pri:hover{background:var(--acc-h);border-color:var(--acc-h)}
-.btn.dark{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn.dark{background:var(--surface2);color:var(--ink);border-color:var(--line2)}
+.btn.dark:hover{background:var(--acc-soft);border-color:var(--acc)}
 .btn.sm{height:30px;padding:0 11px;font-size:calc(12.5px*var(--fs));border-radius:var(--rs)}
 .btn.lg{height:46px;padding:0 22px;font-size:calc(15px*var(--fs));border-radius:var(--rm)}
 .btn.ghost{border-color:transparent;background:transparent}
@@ -95,7 +96,8 @@ svg.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.75;str
 .cats{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:40px 0 28px}
 .cat{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-weight:550;font-size:calc(13.5px*var(--fs));color:var(--ink2);transition:.15s}
 .cat:hover{border-color:var(--line2)}
-.cat.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.cat.on{background:var(--acc);color:var(--on-acc);border-color:var(--acc)}
+.cat.on b{opacity:.8}
 .cat b{font:500 calc(11px*var(--fs)) var(--mono);opacity:.6}
 .sec-h{display:flex;align-items:baseline;gap:12px;margin:34px 0 14px}
 .sec-h h2{font-size:calc(13px*var(--fs));font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
@@ -210,7 +212,7 @@ input[type=range]{width:100%;accent-color:var(--acc);height:20px}
 .imgs figure{border:1px solid var(--line);border-radius:var(--rm);overflow:hidden;background:var(--surface)}
 .imgs img{width:100%;display:block;background:repeating-conic-gradient(#e5e5e5 0 25%,#fff 0 50%) 0 0/14px 14px}
 .imgs figcaption{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;font:calc(11px*var(--fs)) var(--mono);color:var(--muted)}
-.txt-out{background:#14181f;color:#c7dcf0;border-radius:var(--rm);padding:16px;font:calc(12.5px*var(--fs))/1.7 var(--mono);white-space:pre-wrap;word-break:break-word;max-height:380px;overflow:auto;margin-top:12px}
+.txt-out{background:var(--surface2);color:var(--ink);border:1px solid var(--line);border-radius:var(--rm);padding:16px;font:calc(12.5px*var(--fs))/1.7 var(--mono);white-space:pre-wrap;word-break:break-word;max-height:380px;overflow:auto;margin-top:12px}
 .chain{margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
 .chain label{font-size:calc(12px*var(--fs));color:var(--muted);font-weight:500;display:block;margin-bottom:6px}
 
@@ -277,9 +279,10 @@ input[type=range]{width:100%;accent-color:var(--acc);height:20px}
 .modal-c{background:var(--surface);border-radius:var(--rl);width:100%;max-width:640px;max-height:92vh;overflow:auto;box-shadow:0 30px 80px rgba(0,0,0,.35);padding:22px}
 .modal-c h3{font-size:calc(18px*var(--fs));letter-spacing:-.02em;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
 .pad{border:1px solid var(--line2);border-radius:var(--rm);background:#fff;touch-action:none;width:100%;display:block;cursor:crosshair}
-.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,24px);opacity:0;background:var(--ink);color:var(--bg);padding:11px 18px;border-radius:var(--rm);font-size:calc(14px*var(--fs));font-weight:500;z-index:300;transition:.25s;pointer-events:none;max-width:90vw;box-shadow:0 10px 30px rgba(0,0,0,.3)}
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,24px);opacity:0;background:var(--surface);color:var(--ink);border:1px solid var(--line2);padding:11px 18px;border-radius:var(--rm);font-size:calc(14px*var(--fs));font-weight:500;z-index:300;transition:.25s;pointer-events:none;max-width:90vw;box-shadow:0 10px 30px rgba(0,0,0,.3)}
 .toast.show{opacity:1;transform:translate(-50%,0)}
-.toast.err{background:var(--err);color:#fff}.toast.ok{background:var(--ok);color:#fff}
+.toast.ok{background:color-mix(in srgb,var(--ok) 16%,var(--surface));border-color:var(--ok)}
+.toast.err{background:color-mix(in srgb,var(--err) 14%,var(--surface));border-color:var(--err)}
 .boot{padding:120px 24px;text-align:center;color:var(--muted)}
 
 
@@ -349,10 +352,10 @@ html.in-tool[data-layout=compact] .bnav{display:none}
 .bnav a:active .pill,.bnav button:active .pill{background:var(--surface2)}
 
 /* home */
-[data-layout=compact] .hero{display:contents}
+[data-layout=compact] .hero{padding:16px 0 4px;text-align:left}
 [data-layout=compact] .eyebrow,[data-layout=compact] .trust,[data-layout=compact] .feat,[data-layout=compact] .foot,[data-layout=compact] .hero p.lead{display:none}
 [data-layout=compact] .hero h1{font-size:calc(30px*var(--fs));line-height:1.1;letter-spacing:-.035em;margin:20px 0 14px;text-align:left;max-width:none}
-[data-layout=compact] .search{max-width:none;margin:0;position:sticky;top:calc(56px + env(safe-area-inset-top));z-index:40;background:var(--bg);padding:8px 0}
+[data-layout=compact] .search{max-width:none;margin:0;position:relative}
 [data-layout=compact] .search input{height:52px;border-radius:var(--rx);font-size:calc(16px*var(--fs));padding-left:48px;box-shadow:none;background:var(--surface2);border-color:transparent}
 [data-layout=compact] .search input:focus{background:var(--surface);border-color:var(--acc)}
 [data-layout=compact] .search svg{left:18px}
@@ -434,11 +437,11 @@ html.in-tool[data-layout=compact] .toast{bottom:calc(100px + env(safe-area-inset
 [data-motion=off] *,[data-motion=off] *::before,[data-motion=off] *::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}
 
 /* Material You — tonal surfaces, pill controls, no outlines */
-[data-style=material] :is(.card,.panel,.fcard,.tile,.drop,.set-card,.style-card,.res){border-color:transparent;box-shadow:none}
+[data-style=material] :is(.card,.panel,.fcard,.tile,.drop,.set-card,.style-card,.res,.h-list,.empty-st){border-color:transparent;box-shadow:none}
 [data-style=material] .card:hover{box-shadow:none;transform:none;background:color-mix(in srgb,var(--surface) 86%,var(--acc))}
 [data-style=material] .btn{border-radius:999px;border-color:transparent;background:var(--surface2)}
 [data-style=material] .btn:hover{background:color-mix(in srgb,var(--surface2) 84%,var(--acc));border-color:transparent}
-[data-style=material] .btn.pri,[data-style=material] .btn.dark{background:var(--acc);color:var(--on-acc);box-shadow:none}
+[data-style=material] .btn.pri{background:var(--acc);color:var(--on-acc);box-shadow:none}
 [data-style=material] .btn.pri:hover{background:var(--acc-h)}
 [data-style=material] .btn.ghost{background:transparent}
 [data-style=material] .btn.lg{height:52px}
@@ -457,12 +460,11 @@ html[data-style=glass] body{background:transparent}
 html[data-style=glass]{background:var(--bg)}
 html[data-style=glass] body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(60% 45% at 10% 6%,color-mix(in srgb,var(--acc) 34%,transparent),transparent 72%),radial-gradient(55% 40% at 94% 16%,rgba(90,200,250,.42),transparent 72%),radial-gradient(65% 50% at 55% 104%,rgba(175,82,222,.32),transparent 72%)}
 html[data-style=glass][data-theme=dark] body::before{background:radial-gradient(60% 45% at 10% 6%,color-mix(in srgb,var(--acc) 30%,transparent),transparent 72%),radial-gradient(55% 40% at 94% 16%,rgba(60,130,230,.28),transparent 72%),radial-gradient(65% 50% at 55% 104%,rgba(140,70,200,.28),transparent 72%)}
-[data-style=glass] :is(.panel,.card,.fcard,.tile,.drop,.modal-c,.carry,.doms,.res,.pv,.set-card,.style-card,.toast){-webkit-backdrop-filter:blur(22px) saturate(1.7);backdrop-filter:blur(22px) saturate(1.7);border:1px solid var(--line);box-shadow:var(--glass-hi),var(--glass-sh)}
+[data-style=glass] :is(.panel,.card,.fcard,.tile,.drop,.modal-c,.carry,.doms,.res,.pv,.set-card,.style-card,.toast,.h-list,.empty-st){-webkit-backdrop-filter:blur(22px) saturate(1.7);backdrop-filter:blur(22px) saturate(1.7);border:1px solid var(--line);box-shadow:var(--glass-hi),var(--glass-sh)}
 [data-style=glass] .card:hover{box-shadow:var(--glass-hi),0 14px 40px rgba(40,60,120,.2)}
 [data-style=glass] .top,[data-style=glass][data-layout=compact] .top{background:color-mix(in srgb,var(--bg) 50%,transparent);-webkit-backdrop-filter:blur(26px) saturate(1.8);backdrop-filter:blur(26px) saturate(1.8)}
 [data-style=glass] .btn{border-radius:999px;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:var(--glass-hi)}
 [data-style=glass] .btn.pri{box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 8px 22px color-mix(in srgb,var(--acc) 42%,transparent)}
-[data-style=glass] .btn.dark{background:color-mix(in srgb,var(--ink) 88%,transparent)}
 [data-style=glass] :is(.cat,.search input,.seg){border-radius:999px;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
 [data-style=glass] .cat.on{background:var(--acc);color:var(--on-acc);border-color:transparent}
 [data-style=glass] .tx,[data-style=glass] input[type=text],[data-style=glass] input[type=number],[data-style=glass] input[type=password],[data-style=glass] select,[data-style=glass] textarea{background:var(--surface2);border-color:var(--line)}
@@ -501,6 +503,7 @@ html[data-amoled="1"][data-style=standard] .panel,html[data-amoled="1"][data-sty
 .set-row .lab{flex:1;min-width:0}
 .set-row .lab b{display:block;font-weight:600;font-size:calc(15px*var(--fs))}
 .set-row .lab span{display:block;color:var(--muted);font-size:calc(13px*var(--fs));margin-top:2px;line-height:1.4}
+.set-row.dim{opacity:.45;pointer-events:none}
 .set-row.col{flex-direction:column;align-items:stretch;gap:12px}
 .set-row .seg{min-width:min(100%,270px)}
 .set-row output{font:500 calc(12.5px*var(--fs)) var(--mono);color:var(--acc)}
@@ -563,6 +566,59 @@ html.in-settings[data-layout=compact] .bar-title{display:block;flex:1;min-width:
 [data-layout=compact] .set-row .seg{min-width:100%}
 [data-layout=compact] .pal div{height:46px;font-size:9px}
 @media(max-width:380px){.lang-grid{grid-template-columns:1fr}}
+
+/* ══════ favourites + history ══════ */
+.card-w{position:relative;display:flex}
+.card-w .card{flex:1;min-width:0;padding-right:calc(50px*var(--dens))}
+.card h3 .new{position:static;display:inline-block;vertical-align:middle;margin-left:8px;font:600 calc(9.5px*var(--fs)) var(--mono);letter-spacing:.07em;padding:2px 6px;border-radius:5px;background:var(--acc);color:var(--on-acc);top:auto;right:auto}
+.fav{position:absolute;top:8px;right:8px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:var(--muted);transition:color .15s,background .15s,transform .15s;z-index:2}
+.fav svg{width:20px;height:20px}
+.fav:hover{background:var(--surface2);color:var(--ink)}
+.fav.on{color:#e8a317}.fav.on svg{fill:currentColor}
+.fav:active{transform:scale(.88)}
+#favBtn.on{color:#e8a317}#favBtn.on svg{fill:currentColor}
+#searchBtn svg,#favBtn svg{width:21px;height:21px}
+[data-cat-layout=grid] .card-w .card{padding-right:14px}
+[data-cat-layout=grid] .fav{top:6px;right:6px}
+.page-tabs{max-width:430px;margin:0 0 22px}
+.page-tabs button{display:flex;align-items:center;justify-content:center;gap:8px;padding:10px 12px;min-height:42px}
+.page-tabs b{font:500 calc(11px*var(--fs)) var(--mono);opacity:.6}
+.empty-st{text-align:center;padding:56px 24px;border:1.5px dashed var(--line2);border-radius:var(--rl);background:var(--surface);color:var(--muted)}
+.empty-st .big{width:64px;height:64px;border-radius:50%;background:var(--acc-soft);color:var(--acc);display:grid;place-items:center;margin:0 auto 16px}
+.empty-st .big svg{width:30px;height:30px}
+.empty-st h3{color:var(--ink);font-size:calc(18px*var(--fs));margin-bottom:6px}
+.empty-st p{max-width:380px;margin:0 auto 18px;font-size:calc(14px*var(--fs))}
+.h-list{background:var(--surface);border:1px solid var(--line);border-radius:var(--rl);overflow:hidden}
+.h-item{display:flex;align-items:center;gap:14px;padding:calc(12px*var(--dens)) calc(16px*var(--dens));border-top:1px solid var(--line)}
+.h-item:first-child{border-top:0}
+.h-item .ic{width:42px;height:42px;border-radius:var(--rm);display:grid;place-items:center;flex-shrink:0;color:color-mix(in srgb,var(--c,var(--acc)) 80%,var(--ink));background:color-mix(in srgb,var(--c,var(--acc)) 12%,var(--surface))}
+.h-item .meta{flex:1;min-width:0}
+.h-item .meta b{display:block;font-weight:600;font-size:calc(14.5px*var(--fs));overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.h-item .meta span{font-size:calc(12.5px*var(--fs));color:var(--muted)}
+.h-item .off{display:inline-block;margin-top:3px;font-size:calc(11.5px*var(--fs));color:var(--warn);background:color-mix(in srgb,var(--warn) 12%,var(--surface));padding:2px 8px;border-radius:99px}
+.h-item.gone{opacity:.8}
+.sec-h .see-all{font-size:calc(13px*var(--fs));font-weight:600;color:var(--acc);white-space:nowrap}
+.sec-h .see-all:hover{text-decoration:underline}
+[data-layout=compact] .page-tabs{max-width:none}
+[data-layout=compact] .h-item{flex-wrap:wrap}
+[data-layout=compact] .h-item .meta{flex:1 1 140px}
+html.in-settings[data-layout=compact] .page-title-hide{display:none}
+
+/* ══════ settings menu, preview, beta, placeholders, page transitions ══════ */
+.set-link{color:inherit;text-decoration:none;cursor:pointer;transition:background .15s}
+.set-link:hover,.set-link:active{background:var(--surface2)}
+.set-link>svg{color:var(--muted);width:18px;height:18px}
+.set-link .ic-sq{width:42px;height:42px;border-radius:var(--rm);display:grid;place-items:center;flex-shrink:0;background:var(--acc-soft);color:var(--acc)}
+.set-row .lab b .beta,.beta{display:inline-block;margin-top:0;margin-left:8px;vertical-align:middle;font:600 calc(9.5px*var(--fs)) var(--mono);letter-spacing:.07em;text-transform:uppercase;padding:2px 7px;border-radius:99px;background:color-mix(in srgb,var(--warn) 14%,var(--surface));color:var(--warn);border:1px solid color-mix(in srgb,var(--warn) 35%,transparent)}
+.set-row.soon{pointer-events:none}.set-row.soon .lab{opacity:.6}
+.badge-soon{font:600 calc(11px*var(--fs)) var(--mono);padding:5px 11px;border-radius:99px;background:var(--surface2);color:var(--muted);border:1px solid var(--line2);white-space:nowrap}
+.cat-prev{position:relative;max-height:420px;overflow:hidden;padding:4px 16px 0;border:1px solid var(--line);border-radius:var(--rl);background:var(--bg);pointer-events:none;user-select:none;-webkit-mask-image:linear-gradient(#000 80%,transparent);mask-image:linear-gradient(#000 80%,transparent)}
+.cat-prev .doms{margin:12px auto 0;max-width:none}
+.cat-prev .sec-h{margin:16px 0 10px}
+@keyframes pt-fade{from{opacity:0}to{opacity:1}}
+@keyframes pt-slide{from{opacity:0;left:26px}to{opacity:1;left:0}}
+[data-page-anim=fade] #app>*{animation:pt-fade .3s ease backwards}
+[data-page-anim=slide] #app>*{position:relative;animation:pt-slide .32s ease backwards}
 </style>
 </head>
 <body>
@@ -570,9 +626,11 @@ html.in-settings[data-layout=compact] .bar-title{display:block;flex:1;min-width:
   <a class="bar-back" id="barBack" href="#/" aria-label="Back"></a>
   <a class="logo" href="#/" aria-label="DocKit home"><span class="logo-mark" id="logoMark"></span><span id="logoText">DocKit</span></a>
   <span class="bar-title" id="barTitle"></span>
-  <nav class="top-nav"><a href="#/">All tools</a><a href="#/pdf">PDF</a><a href="#/text">Text</a><a href="#/" data-go="privacy">Privacy</a></nav>
+  <nav class="top-nav"><a href="#/">All tools</a><a href="#/pdf">PDF</a><a href="#/text">Text</a><a href="#/favorites">Favorites</a><a href="#/" data-go="privacy">Privacy</a></nav>
   <div class="top-r">
     <span class="pill-priv" id="privPill"></span>
+    <button class="btn icon ghost" id="favBtn" aria-label="Add to favorites" aria-pressed="false" hidden></button>
+    <button class="btn icon ghost" id="searchBtn" aria-label="Search"></button>
     <a class="btn icon ghost" id="setBtn" href="#/settings" aria-label="Settings"></a>
     <button class="btn icon ghost" id="themeBtn" aria-label="Toggle dark mode"></button>
   </div>
@@ -700,6 +758,8 @@ const IC = {
   sliders: '<path d="M4 6h8M18 6h2M4 12h2M12 12h8M4 18h10M20 18h0"/><circle cx="15" cy="6" r="2.2"/><circle cx="9" cy="12" r="2.2"/><circle cx="17" cy="18" r="2.2"/>',
   palette: '<circle cx="13.5" cy="6.5" r="1"/><circle cx="17.5" cy="10.5" r="1"/><circle cx="8.5" cy="7.5" r="1"/><circle cx="6.5" cy="12.5" r="1"/><path d="M12 22a10 10 0 1 1 10-10c0 3-2 4-4 4h-2a2 2 0 0 0-1 3.7 1.5 1.5 0 0 1-1 2.3z"/>',
   globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+  star: '<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.5 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',
+  history: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
   home: '<path d="M3 11 12 3l9 8M5 10v10h5v-6h4v6h5V10"/>',
   arrowRight: '<path d="M5 12h14M13 6l6 6-6 6"/>'
 };
@@ -2236,10 +2296,11 @@ STAGES.reader = ctx => {
 
 /* ═════════ settings, theming (Material You / iPhone glass) and language ═════════ */
 const SETTINGS_KEY = 'dockit-settings';
+const inSet = () => /^#\/settings(\/|$)/.test(location.hash);
 const CFG_DEFAULT = {
-  mode: 'system', amoled: false, style: 'standard', accent: '#e4461e', radius: 'default', density: 'comfortable', fontScale: 100, font: 'inter', motion: true,
+  mode: 'system', amoled: false, style: 'standard', accent: '#e4461e', radius: 'default', density: 'comfortable', fontScale: 100, font: 'inter', motion: true, pageAnim: 'off',
   lang: 'en', bnDigits: false,
-  catLayout: 'list', catDesc: true, catIcons: true, catNew: true, catCounts: true, catPopular: true, catRecent: true, defaultTab: 'all', hiddenCats: []
+  catLayout: 'list', catDesc: true, catIcons: true, catNew: true, catCounts: true, catPopular: true, catRecent: true, catFavs: true, histOn: true, histFiles: true, defaultTab: 'all', hiddenCats: []
 };
 let CFG = { ...CFG_DEFAULT };
 function loadCfg() {
@@ -2285,7 +2346,7 @@ const PAL_VARS = ['--bg', '--surface', '--surface2', '--line', '--line2', '--ink
 const effectiveDark = () => CFG.mode === 'dark' || (CFG.mode === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
 function applySettings() {
   const r = document.documentElement, st = r.style, dark = effectiveDark(), d = r.dataset;
-  d.theme = dark ? 'dark' : 'light'; d.style = CFG.style; d.radius = CFG.radius; d.density = CFG.density; d.font = CFG.font; d.motion = CFG.motion ? 'on' : 'off';
+  d.theme = dark ? 'dark' : 'light'; d.style = CFG.style; d.radius = CFG.radius; d.density = CFG.density; d.font = CFG.font; d.motion = CFG.motion ? 'on' : 'off'; d.pageAnim = CFG.pageAnim;
   d.amoled = dark && CFG.amoled ? '1' : '0'; d.catLayout = CFG.catLayout; d.catDesc = CFG.catDesc ? '1' : '0'; d.catIcons = CFG.catIcons ? '1' : '0';
   d.catNew = CFG.catNew ? '1' : '0'; d.catCounts = CFG.catCounts ? '1' : '0'; r.lang = CFG.lang === 'bn' ? 'bn' : 'en';
   st.setProperty('--fs', String(CFG.fontScale / 100)); PAL_VARS.forEach(v => st.removeProperty(v));
@@ -2306,18 +2367,14 @@ function applySettings() {
 }
 function setCfg(k, v, { repaint = true } = {}) {
   CFG[k] = v; saveCfg(); applySettings();
-  if (k === 'lang' || k === 'bnDigits') { I18N.on = CFG.lang === 'bn'; if (S.tool === null && location.hash === '#/settings' && repaint) paintSettings(); i18nRefresh(); try { setChrome(S.tool || (location.hash === '#/settings' ? { settings: true } : null)); } catch {} return; }
-  if (['catLayout', 'catDesc', 'catIcons', 'catNew', 'catCounts', 'catPopular', 'catRecent', 'hiddenCats'].includes(k)) { /* applied when the catalogue is next drawn */ }
-  if (repaint && location.hash === '#/settings') paintSettings();
+  if (k === 'lang' || k === 'bnDigits') { I18N.on = CFG.lang === 'bn'; if (inSet() && repaint) paintSettings(); i18nRefresh(); if (inSet()) setChrome(settingsChrome()); return; }
+  if (['catLayout', 'catDesc', 'catIcons', 'catNew', 'catCounts', 'catPopular', 'catRecent', 'catFavs', 'hiddenCats'].includes(k)) { /* applied when the catalogue is next drawn */ }
+  if (k === 'pageAnim') { const w = app.firstElementChild; if (w) { w.style.animation = 'none'; void w.offsetWidth; w.style.animation = ''; } }
+  if (repaint && inSet()) paintSettings();
 }
 function applyTheme(t) { setCfg('mode', t, { repaint: false }); } /* kept for the top-bar toggle */
-function toggleTheme() { setCfg('mode', effectiveDark() ? 'light' : 'dark', { repaint: location.hash === '#/settings' }); }
-function resetCfg() { const lang = CFG.lang; CFG = { ...CFG_DEFAULT }; saveCfg(); applySettings(); I18N.on = false; paintSettings(); i18nRefresh(); toast('Settings reset to defaults', 'ok'); if (lang === 'bn') setChrome(location.hash === '#/settings' ? { settings: true } : null); }
-
-/* ── recently used tools ── */
-const RECENT_KEY = 'dockit-recent';
-const getRecents = () => { try { return JSON.parse(localStorage.getItem(RECENT_KEY) || '[]'); } catch { return []; } };
-function pushRecent(key) { try { const a = [key, ...getRecents().filter(x => x !== key)].slice(0, 8); localStorage.setItem(RECENT_KEY, JSON.stringify(a)); } catch {} }
+function toggleTheme() { setCfg('mode', effectiveDark() ? 'light' : 'dark', { repaint: inSet() }); }
+function resetCfg() { const lang = CFG.lang; CFG = { ...CFG_DEFAULT }; saveCfg(); applySettings(); I18N.on = false; paintSettings(); i18nRefresh(); toast('Settings reset to defaults', 'ok'); if (lang === 'bn' && inSet()) setChrome(settingsChrome()); }
 
 /* ── settings page ── */
 const ACCENTS = [['#e4461e', 'Vermilion'], ['#d81b60', 'Rose'], ['#8e24aa', 'Purple'], ['#4f46e5', 'Indigo'], ['#1a73e8', 'Blue'], ['#007aff', 'iOS blue'], ['#00897b', 'Teal'], ['#1e8e3e', 'Green'], ['#f59e0b', 'Amber'], ['#475569', 'Slate']];
@@ -2325,14 +2382,25 @@ const segCtl = (k, opts, val) => `<div class="seg" role="group">${opts.map(([v, 
 const switchCtl = (k, on, label) => `<button type="button" role="switch" class="switch" data-k="${k}" data-sw="1" aria-checked="${!!on}" aria-label="${label}"></button>`;
 const row = (title, desc, ctl, cls = '') => `<div class="set-row ${cls}"><div class="lab"><b>${title}</b>${desc ? `<span>${desc}</span>` : ''}</div>${ctl}</div>`;
 const sec = (ic, t) => `<div class="set-sec">${icon(ic)}${t}</div>`;
-function openSettings() {
-  cleanup(); S.tool = null; S.onOpt = null; setChrome({ settings: true });
-  app.innerHTML = `<div class="wrap ws set"><nav class="crumbs"><a href="#/">${icon('back')}All tools</a><span>/</span><span style="color:var(--ink2)">Settings</span></nav>
-    <header class="ws-head" style="--c:#64748b"><span class="ic">${icon('gear')}</span><div><h1>Settings</h1><p>Make the app look and work the way you like. Changes apply instantly and are saved on this device.</p></div></header>
+const SET_META = {
+  menu: { t: 'Settings', ic: 'gear', d: 'Make the app look and work the way you like. Changes apply instantly and are saved on this device.' },
+  theme: { t: 'Theme mode', ic: 'palette', d: 'Appearance and accent colour' },
+  animation: { t: 'Animation + text', ic: 'sliders', d: 'Shape, text size, motion and language' },
+  catalogue: { t: 'Catalogue', ic: 'grid', d: 'Home layout, rows and categories' },
+  history: { t: 'History & favorites', ic: 'history', d: 'Saved tools and files, backup and reset' },
+  about: { t: 'About', ic: 'info', d: 'Version and information' }
+};
+const settingsChrome = () => ({ settings: true, title: SET_META[S.setPage].t, back: S.setPage === 'menu' ? null : '#/settings' });
+function openSettings(page) {
+  S.setPage = SET_META[page] ? page : 'menu'; const m = SET_META[S.setPage];
+  cleanup(); S.tool = null; S.onOpt = null; setChrome(settingsChrome());
+  const crumbs = S.setPage === 'menu' ? `<a href="#/">${icon('back')}All tools</a><span>/</span><span style="color:var(--ink2)">Settings</span>` : `<a href="#/settings">${icon('back')}Settings</a><span>/</span><span style="color:var(--ink2)">${m.t}</span>`;
+  app.innerHTML = `<div class="wrap ws set"><nav class="crumbs">${crumbs}</nav>
+    <header class="ws-head" style="--c:#64748b"><span class="ic">${icon(m.ic)}</span><div><h1>${m.t}</h1><p>${m.d}</p></div></header>
     <div id="setBody" style="max-width:860px"></div></div>`;
   const body = $('#setBody');
   body.onclick = e => {
-    const b = e.target.closest('[data-k],[data-reset]'); if (!b) return;
+    const b = e.target.closest('[data-k],[data-reset]'); if (!b) return; if (b.dataset.clear) return;
     if (b.dataset.reset !== undefined) { if (b.dataset.armed) { clearTimeout(b._t); resetCfg(); } else { b.dataset.armed = '1'; b.textContent = 'Tap again to confirm'; b._t = setTimeout(() => { b.dataset.armed = ''; b.textContent = 'Reset all settings'; }, 3000); } return; }
     const k = b.dataset.k, v = b.dataset.v;
     if (b.dataset.sw) return setCfg(k, !CFG[k]);
@@ -2349,12 +2417,24 @@ function openSettings() {
   body.addEventListener('change', e => { if (e.target.id === 'customColor') paintSettings(); });
   paintSettings();
 }
+
+function catPreview() {
+  const pick = id => ALLT.find(t => id.startsWith('x:') ? t.dom === 'text' && t.id === id.slice(2) : t.dom === 'pdf' && t.id === id);
+  const rowOf = (title, ids) => `<div class="sec-h"><h2>${title}</h2><hr></div><div class="grid">${ids.map(pick).map(toolCard).join('')}</div>`;
+  const tab = CFG.defaultTab, sample = { pdf: ['pdf', 'organize', CATS.organize.n, ['split', 'delete']], text: ['text', 'spacing', TCATS.spacing.n, ['x:wrap', 'x:indent']] }[tab] || ['pdf', 'organize', CATS.organize.n, ['split', 'delete']];
+  const tabs = [['all', '', 'All tools', ALLT.length], ['pdf', 'file', 'PDF tools', TOOLS.length], ['text', 'type', 'Text tools', TTOOLS.length]].map(([k, ic, l, n]) => `<button type="button" class="${tab === k ? 'on' : ''}">${ic ? icon(ic) : ''}${l} <b>${n}</b></button>`).join('');
+  const show = !CFG.hiddenCats.includes(sample[0] + ':' + sample[1]);
+  return `<div class="cat-prev" aria-hidden="true" inert><div class="doms seg">${tabs}</div>` +
+    (tab === 'all' ? (CFG.catFavs ? rowOf('Favorites', ['merge', 'x:jsonformat']) : '') + (CFG.catRecent && histOn() ? rowOf('Recently used', ['x:titlecase', 'compress']) : '') + (CFG.catPopular ? rowOf('Popular', ['pdf2img', 'x:findreplace']) : '') : '') +
+    (show ? `<div class="sec-h"><h2>${sample[2]}</h2><span class="cnt">${tab === 'text' ? TCATS.spacing && TTOOLS.filter(t => t.cat === 'spacing').length : TOOLS.filter(t => t.cat === 'organize').length}</span><hr></div><div class="grid">${sample[3].map(pick).map(toolCard).join('')}</div>` : '') + `</div>`;
+}
 function paintSettings() {
   const body = $('#setBody'); if (!body) return; const y = window.scrollY, dark = effectiveDark(), mat = CFG.style === 'material';
   const palette = mat ? materialPalette(CFG.accent, dark, CFG.amoled) : null;
   const hiddenChips = (dom, cats) => Object.entries(cats).map(([k, v]) => `<button type="button" class="cat ${CFG.hiddenCats.includes(dom + ':' + k) ? 'off' : ''}" data-k="hide" data-v="${dom}:${k}">${v.n}</button>`).join('');
-  body.innerHTML =
-    sec('palette', 'Appearance') + `<div class="set-card">
+  const PAGES = {
+    menu: () => `<div class="set-card">${['theme', 'animation', 'catalogue', 'history', 'about'].map(k => `<a class="set-row set-link" href="#/settings/${k}"><span class="ic-sq">${icon(SET_META[k].ic)}</span><div class="lab"><b>${SET_META[k].t}</b><span>${SET_META[k].d}</span></div>${icon('right')}</a>`).join('')}</div>`,
+    theme: () => sec('palette', 'Appearance') + `<div class="set-card">
       ${row('Theme mode', 'Follow your device, or force light or dark.', segCtl('mode', [['light', 'Light'], ['dark', 'Dark'], ['system', 'System']], CFG.mode))}
       ${row('Pure black (AMOLED)', 'Uses true black in dark mode — saves battery on OLED screens.', switchCtl('amoled', CFG.amoled, 'Pure black'))}
       <div class="set-row col"><div class="lab"><b>Design style</b><span>Pick the overall look of the app.</span></div><div class="style-grid">
@@ -2362,18 +2442,27 @@ function paintSettings() {
         <button type="button" class="style-card ${mat ? 'on' : ''}" data-k="style" data-v="material"><div class="mock mock-mat"><i class="c"></i><i class="t"></i><i class="b"></i><i class="f"></i></div><div><b>Material You</b><span class="d">Android-style colours built from your seed colour.</span></div></button>
         <button type="button" class="style-card ${CFG.style === 'glass' ? 'on' : ''}" data-k="style" data-v="glass"><div class="mock mock-gls"><i class="c"></i><i class="t"></i><i class="b"></i></div><div><b>iPhone glass</b><span class="d">Frosted, translucent layers with soft gradients.</span></div></button>
       </div></div></div>` +
-    sec('palette', mat ? 'Seed colour' : 'Accent colour') + `<div class="set-card"><div class="set-row col"><div class="lab"><b>${mat ? 'Material You seed colour' : 'Accent colour'}</b><span>${mat ? 'Browsers cannot read your wallpaper, so pick a seed colour — the full Material palette is generated from it.' : 'Used for buttons, highlights and focus rings.'}</span></div>
+      sec('palette', mat ? 'Seed colour' : 'Accent colour') + `<div class="set-card"><div class="set-row col"><div class="lab"><b>${mat ? 'Material You seed colour' : 'Accent colour'}</b><span>${mat ? 'Browsers cannot read your wallpaper, so pick a seed colour — the full Material palette is generated from it.' : 'Used for buttons, highlights and focus rings.'}</span></div>
       <div class="swatches">${ACCENTS.map(([c, n]) => `<button type="button" style="background:${c}" data-k="accent" data-v="${c}" class="${CFG.accent.toLowerCase() === c ? 'on' : ''}" aria-label="${n}" title="${n}">${CFG.accent.toLowerCase() === c ? icon('check') : ''}</button>`).join('')}
         <label title="Custom colour" aria-label="Custom colour"><input type="color" id="customColor" value="${CFG.accent}"></label>${mat ? `<button type="button" class="btn sm" data-k="randomSeed">${icon('dice')}Surprise me</button>` : ''}</div>
-      ${mat ? `<div class="pal"><div style="background:${palette.acc};color:${palette.on}">Primary</div><div style="background:${palette.container};color:${palette.ink}">Container</div><div style="background:${palette.secondary};color:${onColor(palette.secondary)}">Secondary</div><div style="background:${palette.tertiary};color:${onColor(palette.tertiary)}">Tertiary</div><div style="background:${palette.surface2};color:${palette.ink}">Surface</div></div>` : ''}</div></div>` +
-    sec('sliders', 'Shape & text') + `<div class="set-card">
+      ${mat ? `<div class="pal"><div style="background:${palette.acc};color:${palette.on}">Primary</div><div style="background:${palette.container};color:${palette.ink}">Container</div><div style="background:${palette.secondary};color:${onColor(palette.secondary)}">Secondary</div><div style="background:${palette.tertiary};color:${onColor(palette.tertiary)}">Tertiary</div><div style="background:${palette.surface2};color:${palette.ink}">Surface</div></div>` : ''}</div></div>`,
+    animation: () => sec('sliders', 'Shape & text') + `<div class="set-card">
       ${row('Corner roundness', '', segCtl('radius', [['sharp', 'Sharp'], ['default', 'Default'], ['round', 'Round']], CFG.radius))}
       ${row('Density', 'Space between elements.', segCtl('density', [['compact', 'Compact'], ['comfortable', 'Comfortable'], ['spacious', 'Spacious']], CFG.density))}
       <div class="set-row col"><div class="lab" style="display:flex;justify-content:space-between;gap:12px"><div><b>Text size</b><span>Makes all text larger or smaller.</span></div><div style="text-align:right"><output>${CFG.fontScale}%</output><br><button type="button" class="btn sm ghost" data-k="fontScale" style="margin-top:4px">Reset</button></div></div><input type="range" id="fsRange" min="85" max="130" step="5" value="${CFG.fontScale}" aria-label="Text size"></div>
       ${row('Font', '', segCtl('font', [['inter', 'Inter'], ['system', 'System'], ['serif', 'Serif']], CFG.font))}
       ${row('Animations', 'Turn off for a calmer, faster feel.', switchCtl('motion', CFG.motion, 'Animations'))}
+      ${row('Page transitions <span class="beta">Beta</span>', 'Animate the change between screens. Experimental.', segCtl('pageAnim', [['off', 'Off'], ['fade', 'Fade'], ['slide', 'Slide']], CFG.pageAnim), CFG.motion ? '' : 'dim')}
     </div>` +
-    sec('grid', 'Catalogue') + `<div class="set-card">
+      sec('globe', 'Language') + `<div class="set-card"><div class="set-row col"><div class="lab"><b>App language</b><span>Switches menus, tool names and descriptions.</span></div>
+      <div class="lang-grid">
+        <button type="button" class="lang-card ${CFG.lang === 'en' ? 'on' : ''}" data-k="lang" data-v="en"><div><b>English</b><span>English</span></div><i class="ck">${icon('check')}</i></button>
+        <button type="button" class="lang-card ${CFG.lang === 'bn' ? 'on' : ''}" data-k="lang" data-v="bn"><div><b>বাংলা</b><span>Bangla</span></div><i class="ck">${icon('check')}</i></button>
+      </div></div>
+      ${row('Bangla numerals', 'Show ০১২৩৪৫৬৭৮৯ instead of 0123456789 in the app.', switchCtl('bnDigits', CFG.bnDigits, 'Bangla numerals'))}
+    </div>`,
+    catalogue: () => sec('grid', 'Live preview') + catPreview() +
+      sec('grid', 'Catalogue') + `<div class="set-card">
       ${row('Tool layout', 'How tools are listed on the home screen.', segCtl('catLayout', [['list', 'List'], ['grid', 'Grid'], ['dense', 'Compact']], CFG.catLayout))}
       ${row('Start on', 'Which tab opens first.', segCtl('defaultTab', [['all', 'All'], ['pdf', 'PDF'], ['text', 'Text']], CFG.defaultTab))}
       ${row('Show descriptions', 'A short line under each tool name.', switchCtl('catDesc', CFG.catDesc, 'Show descriptions'))}
@@ -2386,18 +2475,26 @@ function paintSettings() {
         <div><div class="lbl" style="margin-bottom:8px">PDF tools</div><div class="chips">${hiddenChips('pdf', CATS)}</div></div>
         <div><div class="lbl" style="margin-bottom:8px">Text tools</div><div class="chips">${hiddenChips('text', TCATS)}</div></div>
         ${CFG.hiddenCats.length ? `<div><button type="button" class="btn sm" data-k="showAll">Show all categories</button></div>` : ''}</div>
+    </div>`,
+    history: () => sec('history', 'History & favorites') + `<div class="set-card">
+      ${row('Save history', 'Remember which tools and files you open — stored only on this device.', switchCtl('histOn', CFG.histOn, 'Save history'))}
+      ${row('Keep copies of opened files', 'Lets you reopen files from History. Copies stay private in your browser storage.', switchCtl('histFiles', CFG.histFiles, 'Keep file copies'), CFG.histOn ? '' : 'dim')}
+      ${row('Favorites row on home', '', switchCtl('catFavs', CFG.catFavs, 'Favorites row'))}
+      ${row('Clear history', 'Removes recent tools and saved file copies.', `<button type="button" class="btn" data-clear="history">Clear history</button>`)}
+      ${row('Clear favorites', 'Removes every starred tool.', `<button type="button" class="btn" data-clear="favs">Clear favorites</button>`)}
     </div>` +
-    sec('globe', 'Language') + `<div class="set-card"><div class="set-row col"><div class="lab"><b>App language</b><span>Switches menus, tool names and descriptions.</span></div>
-      <div class="lang-grid">
-        <button type="button" class="lang-card ${CFG.lang === 'en' ? 'on' : ''}" data-k="lang" data-v="en"><div><b>English</b><span>English</span></div><i class="ck">${icon('check')}</i></button>
-        <button type="button" class="lang-card ${CFG.lang === 'bn' ? 'on' : ''}" data-k="lang" data-v="bn"><div><b>বাংলা</b><span>Bangla</span></div><i class="ck">${icon('check')}</i></button>
-      </div></div>
-      ${row('Bangla numerals', 'Show ০১২৩৪৫৬৭৮৯ instead of 0123456789 in the app.', switchCtl('bnDigits', CFG.bnDigits, 'Bangla numerals'))}
+      sec('download', 'Backup & restore') + `<div class="set-card">
+      ${row('Backup', 'Save your settings, favorites and history to a file.', '<span class="badge-soon">Coming soon</span>', 'soon')}
+      ${row('Restore', 'Load a saved backup file.', '<span class="badge-soon">Coming soon</span>', 'soon')}
     </div>` +
-    sec('info', 'About') + `<div class="set-card">
-      ${row(APP_NAME, `${TOOLS.length + TTOOLS.length} tools · everything runs privately in your browser.`, '')}
+      sec('rotate', 'Reset') + `<div class="set-card">
       ${row('Reset settings', 'Restore theme, layout and language to the defaults.', `<button type="button" class="btn" data-reset="1">Reset all settings</button>`)}
-    </div>`;
+    </div>`,
+    about: () => sec('info', 'About') + `<div class="set-card">
+      ${row(APP_NAME, `${TOOLS.length + TTOOLS.length} tools · everything runs privately in your browser.`, '')}
+    </div>`
+  };
+  body.innerHTML = PAGES[S.setPage]();
   window.scrollTo(0, y);
 }
 
@@ -2451,6 +2548,134 @@ function initI18n() {
     } finally { I18N.busy = false; }
   }).observe(document.body, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: I18N_ATTRS });
 }
+
+/* ═════════ favorites + history (saved locally: localStorage for lists, IndexedDB for file copies) ═════════ */
+const FAV_KEY = 'dockit-favs', HT_KEY = 'dockit-hist-tools', HF_KEY = 'dockit-hist-files', OLD_RECENT = 'dockit-recent';
+const IDB_NAME = 'dockit', IDB_STORE = 'files';
+const FILE_MAX = 40 * 1024 * 1024, FILES_TOTAL_MAX = 120 * 1024 * 1024, FILES_KEEP = 20, TOOLS_KEEP = 30;
+const lsGet = (k, d) => { try { const v = JSON.parse(localStorage.getItem(k)); return v ?? d; } catch { return d; } };
+const lsSet = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch { return false; } };
+
+/* ── favorites ── */
+const favKey = t => t.dom + ':' + t.id;
+const getFavs = () => lsGet(FAV_KEY, []).filter(k => typeof k === 'string');
+const isFav = t => getFavs().includes(favKey(t));
+function toggleFav(t) { const a = getFavs(), k = favKey(t), i = a.indexOf(k); if (i >= 0) a.splice(i, 1); else a.unshift(k); lsSet(FAV_KEY, a); return i < 0; }
+const toolByKey = k => { const i = k.indexOf(':'); const d = k.slice(0, i), id = k.slice(i + 1); return ALLT.find(t => t.dom === d && t.id === id); };
+const favBtnHTML = t => `<button type="button" class="fav${isFav(t) ? ' on' : ''}" data-fav="${favKey(t)}" aria-pressed="${isFav(t)}" aria-label="${isFav(t) ? 'Remove from favorites' : 'Add to favorites'}">${icon('star')}</button>`;
+function syncFavUI() {
+  const favs = new Set(getFavs());
+  $$('.fav[data-fav]').forEach(b => { const on = favs.has(b.dataset.fav); b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); b.setAttribute('aria-label', on ? 'Remove from favorites' : 'Add to favorites'); });
+  const fb = $('#favBtn'); if (fb && S.tool && S.tool.dom) { const on = isFav(S.tool); fb.classList.toggle('on', on); fb.setAttribute('aria-pressed', on); fb.setAttribute('aria-label', on ? 'Remove from favorites' : 'Add to favorites'); }
+}
+
+/* ── recent tools ── */
+const histOn = () => CFG.histOn !== false;
+function recordTool(t) { if (!histOn() || !t || !t.dom) return; const k = favKey(t), a = getHistTools().filter(x => x.key !== k); a.unshift({ key: k, ts: Date.now() }); lsSet(HT_KEY, a.slice(0, TOOLS_KEEP)); }
+const getHistTools = () => lsGet(HT_KEY, []).filter(x => x && typeof x.key === 'string');
+const removeHistTool = k => lsSet(HT_KEY, getHistTools().filter(x => x.key !== k));
+function migrateHistory() {
+  try {
+    if (localStorage.getItem(HT_KEY) === null) { const old = lsGet(OLD_RECENT, []); if (old.length) lsSet(HT_KEY, old.map((k, i) => ({ key: k.startsWith('x:') ? 'text:' + k.slice(2) : 'pdf:' + k, ts: Date.now() - i * 60000 }))); }
+  } catch {}
+}
+
+/* ── IndexedDB (file copies) ── */
+let _db = null;
+const idb = () => _db ||= new Promise((res, rej) => { const r = indexedDB.open(IDB_NAME, 1); r.onupgradeneeded = () => r.result.createObjectStore(IDB_STORE, { keyPath: 'id' }); r.onsuccess = () => res(r.result); r.onerror = () => { _db = null; rej(r.error); }; });
+const idbReq = (mode, fn) => idb().then(db => new Promise((res, rej) => { const tx = db.transaction(IDB_STORE, mode); let rq; try { rq = fn(tx.objectStore(IDB_STORE)); } catch (e) { return rej(e); } tx.oncomplete = () => res(rq && rq.result); tx.onerror = tx.onabort = () => rej(tx.error); }));
+const idbPut = (id, blob) => idbReq('readwrite', s => s.put({ id, blob }));
+const idbGet = id => idbReq('readonly', s => s.get(id)).then(r => r && r.blob);
+const idbDel = id => idbReq('readwrite', s => s.delete(id));
+const idbClear = () => idbReq('readwrite', s => s.clear());
+
+/* ── recent files ── */
+const getHistFiles = () => lsGet(HF_KEY, []).filter(x => x && x.id);
+async function pruneFiles(list) {
+  let total = 0;
+  for (const m of list) if (m.stored) { total += m.size; if (total > FILES_TOTAL_MAX) { try { await idbDel(m.id); } catch {} m.stored = false; } }
+  while (list.length > FILES_KEEP) { const m = list.pop(); if (m.stored) { try { await idbDel(m.id); } catch {} } }
+}
+async function recordFile(file, { dom, tool, kind }) {
+  if (!histOn() || !file || file._gen) return;
+  try {
+    const list = getHistFiles(), sig = `${dom}:${tool}:${file.name}:${file.size}`; let m = list.find(x => x.sig === sig);
+    if (m) list.splice(list.indexOf(m), 1); else m = { id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7), sig, name: file.name, size: file.size, type: file.type || '', kind, dom, tool, stored: false };
+    m.ts = Date.now(); list.unshift(m);
+    if (CFG.histFiles !== false && file.size <= FILE_MAX && !m.stored) { try { await idbPut(m.id, file); m.stored = true; } catch { m.stored = false; } }
+    await pruneFiles(list); lsSet(HF_KEY, list);
+  } catch (e) { console.warn('history', e); }
+}
+async function removeHistFile(id) { lsSet(HF_KEY, getHistFiles().filter(x => x.id !== id)); try { await idbDel(id); } catch {} }
+async function clearHistory() { lsSet(HT_KEY, []); lsSet(HF_KEY, []); try { await idbClear(); } catch {} }
+async function reopenFile(id) {
+  const m = getHistFiles().find(x => x.id === id); if (!m) return;
+  let blob = null; if (m.stored) { try { blob = await idbGet(id); } catch {} }
+  if (!blob) { const list = getHistFiles(); const x = list.find(y => y.id === id); if (x) { x.stored = false; lsSet(HF_KEY, list); } renderFavBody(); return toast('This file is no longer stored on this device', 'err'); }
+  const ok = ALLT.some(t => t.dom === m.dom && t.id === m.tool);
+  if (m.kind === 'text') { S.carry = null; S.carryText = { name: m.name, text: await blob.text() }; } else { S.carryText = null; S.carry = new File([blob], m.name, { type: m.type || blob.type }); }
+  recordTool({ dom: m.dom, id: m.tool });
+  if (!ok) { location.hash = '#/'; return; }
+  m.dom === 'pdf' ? go(m.tool) : goText(m.tool);
+}
+function ago(ts) {
+  const s = (Date.now() - ts) / 1000; if (s < 45) return 'Just now'; const m = Math.round(s / 60); if (m < 60) return m + ' min ago';
+  const h = Math.round(m / 60); if (h < 24) return h + (h === 1 ? ' hour ago' : ' hours ago'); const d = Math.round(h / 24); if (d === 1) return 'Yesterday'; if (d < 7) return d + ' days ago'; return new Date(ts).toLocaleDateString();
+}
+
+/* ── pages: Favorites | History ── */
+function openFavorites(tab) {
+  cleanup(); S.tool = null; S.onOpt = null; S.favTab = tab === 'history' ? 'history' : 'fav'; setChrome({ settings: true, title: S.favTab === 'history' ? 'History' : 'Favorites' });
+  app.innerHTML = `<div class="wrap ws set"><nav class="crumbs"><a href="#/">${icon('back')}All tools</a><span>/</span><span style="color:var(--ink2)" id="favCrumb"></span></nav>
+    <header class="ws-head" style="--c:#e8a317"><span class="ic">${icon('star')}</span><div><h1>Favorites &amp; history</h1><p>Your starred tools and everything you used recently — saved only on this device.</p></div></header>
+    <div class="seg page-tabs" role="tablist"><button type="button" data-tab="fav">Favorites <b id="nFav"></b></button><button type="button" data-tab="history">History <b id="nHist"></b></button></div>
+    <div id="favBody" style="max-width:900px"></div></div>`;
+  renderFavBody();
+}
+function emptyState(ic, title, text, btn) { return `<div class="empty-st"><div class="big">${icon(ic)}</div><h3>${title}</h3><p>${text}</p>${btn || ''}</div>`; }
+function renderFavBody() {
+  const body = $('#favBody'); if (!body) return; const tab = S.favTab;
+  const favs = getFavs().map(toolByKey).filter(Boolean), ht = getHistTools().map(x => ({ ...x, t: toolByKey(x.key) })).filter(x => x.t), hf = getHistFiles();
+  $$('.page-tabs button').forEach(b => { b.classList.toggle('on', b.dataset.tab === tab); b.setAttribute('aria-pressed', b.dataset.tab === tab); });
+  $('#nFav').textContent = favs.length; $('#nHist').textContent = ht.length + hf.length; const fc = $('#favCrumb'); if (fc) fc.textContent = tab === 'history' ? 'History' : 'Favorites';
+  if (tab === 'fav') {
+    body.innerHTML = favs.length ? `<div class="bar" style="margin-bottom:14px"><span class="cnt">${favs.length} tools</span><span class="sp"></span><button type="button" class="btn sm" data-clear="favs">Clear favorites</button></div><div class="grid">${favs.map(toolCard).join('')}</div>`
+      : emptyState('star', 'No favorites yet', 'Tap the star on any tool to keep it here for quick access.', `<a class="btn pri" href="#/">Browse tools</a>`);
+    return;
+  }
+  const toolRow = x => { const t = x.t, ct = catOf(t); return `<div class="h-item" style="--c:${ct.c}"><span class="ic">${icon(t.dom === 'pdf' ? t.icon : ct.i)}</span><div class="meta"><b>${esc(t.name)}</b><span>${esc(ago(x.ts))}</span></div><button type="button" class="btn sm" data-h="open" data-key="${esc(x.key)}">Open</button><button type="button" class="btn icon sm ghost" data-h="rmtool" data-key="${esc(x.key)}" aria-label="Remove from history">${icon('x')}</button></div>`; };
+  const fileRow = m => { const t = ALLT.find(y => y.dom === m.dom && y.id === m.tool), ic = m.kind === 'image' ? 'image' : m.kind === 'text' ? 'text' : 'file'; return `<div class="h-item${m.stored ? '' : ' gone'}" style="--c:#475569"><span class="ic">${icon(ic)}</span><div class="meta"><b title="${esc(m.name)}">${esc(m.name)}</b><span>${esc(fmtSize(m.size))}</span> · <span>${esc(t ? t.name : 'Tool')}</span> · <span>${esc(ago(m.ts))}</span>${m.stored ? '' : `<br><span class="off">File copy not stored</span>`}</div>${m.stored ? `<button type="button" class="btn sm pri" data-h="reopen" data-id="${m.id}">Reopen</button>` : `<button type="button" class="btn sm" disabled>Unavailable</button>`}<button type="button" class="btn icon sm ghost" data-h="rmfile" data-id="${m.id}" aria-label="Remove from history">${icon('x')}</button></div>`; };
+  const off = !histOn() ? `<div class="note warn" style="margin-bottom:16px">${icon('info')}<span>History is turned off. Turn it on in <a href="#/settings" style="text-decoration:underline">Settings</a> to keep track of tools and files.</span></div>` : '';
+  body.innerHTML = off + (ht.length || hf.length ? `<div class="bar" style="margin-bottom:6px"><span class="cnt">${ht.length + hf.length} items</span><span class="sp"></span><button type="button" class="btn sm" data-clear="history">Clear history</button></div>` : '') +
+    `<div class="sec-h" style="margin-top:12px"><h2>Recent tools</h2><span class="cnt">${ht.length}</span><hr></div>` + (ht.length ? `<div class="h-list">${ht.map(toolRow).join('')}</div>` : emptyState('history', 'No recent tools', 'Tools you open will show up here.')) +
+    `<div class="sec-h" style="margin-top:28px"><h2>Recent files</h2><span class="cnt">${hf.length}</span><hr></div>` + (hf.length ? `<div class="h-list">${hf.map(fileRow).join('')}</div>` : emptyState('file', 'No recent files', 'Files you open in a tool will be listed here so you can reopen them.')) +
+    `<div class="note" style="margin-top:18px">${icon('shield')}<span>History never leaves this device. File copies are kept privately in your browser storage and can be removed at any time.</span></div>`;
+}
+
+/* ── delegated clicks: stars, tabs, history actions, two-tap clear ── */
+document.addEventListener('click', async e => {
+  const fb = e.target.closest('.fav[data-fav]');
+  if (fb) { e.preventDefault(); e.stopPropagation(); const t = toolByKey(fb.dataset.fav); if (!t) return; const on = toggleFav(t); syncFavUI(); toast(on ? 'Added to favorites' : 'Removed from favorites', on ? 'ok' : ''); if (S.favTab && !S.tool && /^#\/(favorites|history)/.test(location.hash)) renderFavBody(); else if (!S.tool && $('#catalog')) paintCatalog(); return; }
+  if (e.target.closest('#favBtn') && S.tool) { const on = toggleFav(S.tool); syncFavUI(); toast(on ? 'Added to favorites' : 'Removed from favorites', on ? 'ok' : ''); return; }
+  const tb = e.target.closest('.page-tabs [data-tab]'); if (tb) { S.favTab = tb.dataset.tab; history.replaceState(null, '', S.favTab === 'history' ? '#/history' : '#/favorites'); setChrome({ settings: true, title: S.favTab === 'history' ? 'History' : 'Favorites' }); renderFavBody(); return; }
+  const ha = e.target.closest('[data-h]');
+  if (ha) {
+    const a = ha.dataset.h;
+    if (a === 'open') { const t = toolByKey(ha.dataset.key); if (t) t.dom === 'pdf' ? go(t.id) : goText(t.id); }
+    else if (a === 'rmtool') { removeHistTool(ha.dataset.key); renderFavBody(); }
+    else if (a === 'rmfile') { await removeHistFile(ha.dataset.id); renderFavBody(); }
+    else if (a === 'reopen') { ha.disabled = true; await reopenFile(ha.dataset.id); }
+    return;
+  }
+  const cl = e.target.closest('[data-clear]');
+  if (cl) {
+    const kind = cl.dataset.clear;
+    if (!cl.dataset.armed) { const txt = cl.textContent; cl.dataset.armed = '1'; cl.dataset.txt = txt; cl.textContent = 'Tap again to confirm'; cl._t = setTimeout(() => { cl.dataset.armed = ''; cl.textContent = txt; }, 3000); return; }
+    clearTimeout(cl._t);
+    if (kind === 'history') { await clearHistory(); toast('History cleared', 'ok'); } else { lsSet(FAV_KEY, []); syncFavUI(); toast('Favorites cleared', 'ok'); }
+    if (S.favTab && /^#\/(favorites|history)/.test(location.hash)) renderFavBody(); else if (inSet()) paintSettings(); else if ($('#catalog')) paintCatalog();
+  }
+});
 
 const BN = {
 "DocKit home": "DocKit হোম",
@@ -3079,6 +3304,69 @@ const BN = {
 "Non-ASCII, after converting accents (é → e)": "নন-ASCII, উচ্চারণ চিহ্ন বদলানোর পর (é → e)",
 "Curly → straight \" \"": "বাঁকা → সোজা \" \"",
 "Words to insert": "যে শব্দ বসাবেন",
+"Favorites": "প্রিয়",
+"History": "ইতিহাস",
+"Favorites & history": "প্রিয় ও ইতিহাস",
+"Your starred tools and everything you used recently — saved only on this device.": "আপনার তারকা চিহ্নিত টুল এবং সম্প্রতি ব্যবহৃত সবকিছু — শুধু এই ডিভাইসে সংরক্ষিত।",
+"Add to favorites": "প্রিয়তে যোগ করুন",
+"Remove from favorites": "প্রিয় থেকে সরান",
+"Added to favorites": "প্রিয়তে যোগ হয়েছে",
+"Removed from favorites": "প্রিয় থেকে সরানো হয়েছে",
+"No favorites yet": "এখনো কোনো প্রিয় টুল নেই",
+"Tap the star on any tool to keep it here for quick access.": "দ্রুত পেতে যেকোনো টুলের তারকায় ট্যাপ করুন, সেটি এখানে থাকবে।",
+"Browse tools": "টুল দেখুন",
+"Clear favorites": "প্রিয় মুছুন",
+"Clear history": "ইতিহাস মুছুন",
+"Recent tools": "সাম্প্রতিক টুল",
+"Recent files": "সাম্প্রতিক ফাইল",
+"No recent tools": "কোনো সাম্প্রতিক টুল নেই",
+"Tools you open will show up here.": "আপনি যে টুল খুলবেন তা এখানে দেখা যাবে।",
+"No recent files": "কোনো সাম্প্রতিক ফাইল নেই",
+"Files you open in a tool will be listed here so you can reopen them.": "কোনো টুলে খোলা ফাইল এখানে তালিকাভুক্ত থাকবে, যাতে আবার খুলতে পারেন।",
+"Open": "খুলুন",
+"Reopen": "আবার খুলুন",
+"Unavailable": "পাওয়া যাচ্ছে না",
+"File copy not stored": "ফাইলের কপি সংরক্ষিত নেই",
+"Remove from history": "ইতিহাস থেকে সরান",
+"History is turned off. Turn it on in": "ইতিহাস বন্ধ আছে। চালু করুন",
+"to keep track of tools and files.": "— টুল ও ফাইলের হিসাব রাখতে।",
+"History never leaves this device. File copies are kept privately in your browser storage and can be removed at any time.": "ইতিহাস কখনো এই ডিভাইস ছাড়ে না। ফাইলের কপি আপনার ব্রাউজার স্টোরেজে গোপনে থাকে এবং যেকোনো সময় মুছে ফেলা যায়।",
+"This file is no longer stored on this device": "এই ফাইলটি আর এই ডিভাইসে সংরক্ষিত নেই",
+"History cleared": "ইতিহাস মুছে ফেলা হয়েছে",
+"Favorites cleared": "প্রিয় মুছে ফেলা হয়েছে",
+"View all": "সব দেখুন",
+"Just now": "এইমাত্র",
+"Yesterday": "গতকাল",
+"History & favorites": "ইতিহাস ও প্রিয়",
+"Save history": "ইতিহাস সংরক্ষণ",
+"Remember which tools and files you open — stored only on this device.": "কোন টুল ও ফাইল খুলেছেন তা মনে রাখুন — শুধু এই ডিভাইসে সংরক্ষিত।",
+"Keep copies of opened files": "খোলা ফাইলের কপি রাখুন",
+"Keep file copies": "ফাইলের কপি রাখুন",
+"Lets you reopen files from History. Copies stay private in your browser storage.": "ইতিহাস থেকে ফাইল আবার খুলতে দেয়। কপি আপনার ব্রাউজার স্টোরেজে গোপন থাকে।",
+"Favorites row on home": "হোমে প্রিয় সারি",
+"Favorites row": "প্রিয় সারি",
+"Removes recent tools and saved file copies.": "সাম্প্রতিক টুল ও সংরক্ষিত ফাইলের কপি মুছে দেয়।",
+"Removes every starred tool.": "তারকা চিহ্নিত সব টুল সরিয়ে দেয়।",
+"Tool": "টুল",
+"Animation + text": "অ্যানিমেশন + লেখা",
+"Appearance and accent colour": "চেহারা ও অ্যাকসেন্ট রং",
+"Shape, text size, motion and language": "আকার, লেখার মাপ, গতি ও ভাষা",
+"Home layout, rows and categories": "হোমের বিন্যাস, সারি ও ক্যাটাগরি",
+"Saved tools and files, backup and reset": "সংরক্ষিত টুল ও ফাইল, ব্যাকআপ ও রিসেট",
+"Version and information": "সংস্করণ ও তথ্য",
+"Page transitions": "পৃষ্ঠা পরিবর্তনের ইফেক্ট",
+"Beta": "বিটা",
+"Animate the change between screens. Experimental.": "স্ক্রিন বদলের সময় অ্যানিমেশন দেখান। পরীক্ষামূলক।",
+"Off": "বন্ধ",
+"Fade": "ফেড",
+"Slide": "স্লাইড",
+"Live preview": "লাইভ প্রিভিউ",
+"Backup & restore": "ব্যাকআপ ও রিস্টোর",
+"Backup": "ব্যাকআপ",
+"Restore": "রিস্টোর",
+"Save your settings, favorites and history to a file.": "আপনার সেটিংস, প্রিয় ও ইতিহাস একটি ফাইলে সংরক্ষণ করুন।",
+"Load a saved backup file.": "সংরক্ষিত ব্যাকআপ ফাইল লোড করুন।",
+"Coming soon": "শীঘ্রই আসছে",
 "Text Spacing Increaser": "টেক্সটের ফাঁক বাড়ান",
 "Add extra spaces between letters or words": "অক্ষর বা শব্দের মাঝে বাড়তি ফাঁক যোগ করুন",
 "Text Line Unwrapper": "লাইন র‍্যাপ খুলুন",
@@ -3866,6 +4154,10 @@ const BN_RULES = [
   [/^Invalid regular expression: (.+)$/, (m, e) => `অবৈধ রেগুলার এক্সপ্রেশন: ${e}`],
   [/^© (.+) — all processing happens on your device\.$/, (m, a) => `© ${a} — সব প্রসেসিং আপনার ডিভাইসেই হয়।`],
   [/^e\.g\. (.+)$/, (m, x) => `যেমন ${x}`],
+  [/^(\d+) items$/, (m, n) => `${n}টি আইটেম`],
+  [/^(\d+) min ago$/, (m, n) => `${n} মিনিট আগে`],
+  [/^(\d+) hours? ago$/, (m, n) => `${n} ঘণ্টা আগে`],
+  [/^(\d+) days ago$/, (m, n) => `${n} দিন আগে`],
   [/^(\d+)pt$/, () => null]
 ];
 
@@ -3885,12 +4177,12 @@ function coerceText(t) {
 }
 function loadTextFile(f) {
   if (!f) return; if (f.size > 20e6) return toast('That file is too large (20 MB max)', 'err');
-  f.text().then(t => { const ta = $('#tin'); if (!ta) return; ta.value = t; ta.dispatchEvent(new Event('input')); toast(`Loaded ${f.name}`, 'ok'); });
+  f.text().then(t => { const ta = $('#tin'); if (!ta) return; ta.value = t; ta.dispatchEvent(new Event('input')); toast(`Loaded ${f.name}`, 'ok'); if (S.tool && S.tool.dom === 'text') recordFile(f, { dom: 'text', tool: S.tool.id, kind: 'text' }); });
 }
 function openText(id) {
   const t = TTOOL[id]; if (!t) { location.hash = '#/'; return; }
   const carry = S.carryText; S.carryText = null; S.carry = S.carry && S.carry.dom ? null : S.carry;
-  cleanup(); Object.assign(S, { tool: t, vals: defaults(t), aux: {}, st: {}, text: '', busy: false, live: !(t.random || t.gen), runId: 0 }); setChrome(t); pushRecent('x:' + t.id);
+  cleanup(); Object.assign(S, { tool: t, vals: defaults(t), aux: {}, st: {}, text: '', busy: false, live: !(t.random || t.gen), runId: 0 }); setChrome(t); recordTool(t);
   const cat = TCATS[t.cat];
   app.innerHTML = `<div class="wrap ws"><nav class="crumbs"><a href="#/text">${icon('back')}All tools</a><span>/</span><span style="color:var(--ink2)">${esc(cat.n)}</span></nav>
     <header class="ws-head" style="--c:${cat.c}"><span class="ic">${icon(cat.i)}</span><div><h1>${esc(t.name)}</h1><p>${esc(t.desc)}</p></div></header>
@@ -3915,7 +4207,7 @@ function openText(id) {
   tin.oninput = () => { upIn(); schedule(); }; if (tin2) tin2.oninput = schedule;
   S.onOpt = () => { if (t.gen) return; schedule(); }; S.destroyers.push(() => { clearTimeout(timer); S.onOpt = null; });
   S.text = { upIn, upOut };
-  if (carry) { tin.value = carry.text; if (carry.name) toast(`${carry.name} loaded`, 'ok'); }
+  if (carry) { tin.value = carry.text; if (carry.name) { toast(`${carry.name} loaded`, 'ok'); recordFile(new File([carry.text], carry.name, { type: 'text/plain' }), { dom: 'text', tool: t.id, kind: 'text' }); } }
   upIn();
   $('#run').onclick = () => runText(true);
   const live = $('#live'); if (live) live.onchange = () => { S.live = live.checked; if (S.live) runText(false); };
@@ -3966,24 +4258,31 @@ function detectDevice() {
   r.dataset.standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone ? '1' : '0';
 }
 function paintNav() {
-  const n = $('#bnav'); if (!n) return; const d = S.tool ? null : location.hash === '#/settings' ? 'settings' : S.home.dom;
-  n.innerHTML = [['all', '#/', 'home', 'Home'], ['pdf', '#/pdf', 'file', 'PDF'], ['text', '#/text', 'type', 'Text']].map(([k, href, ic, l]) => `<a href="${href}" class="${d === k ? 'on' : ''}"${d === k ? ' aria-current="page"' : ''}><span class="pill">${icon(ic)}</span>${l}</a>`).join('') + `<button type="button" id="bSearch"><span class="pill">${icon('search')}</span>Search</button><a href="#/settings" class="${d === 'settings' ? 'on' : ''}"${d === 'settings' ? ' aria-current="page"' : ''}><span class="pill">${icon('gear')}</span>Settings</a>`;
-  $('#bSearch').onclick = () => { if (S.tool) { location.hash = '#/'; setTimeout(() => $('#q')?.focus(), 120); } else { window.scrollTo({ top: 0, behavior: 'smooth' }); $('#q')?.focus(); } };
+  const n = $('#bnav'); if (!n) return; const h = location.hash, d = S.tool ? null : inSet() ? 'settings' : /^#\/(favorites|history)/.test(h) ? 'fav' : S.home.dom;
+  n.innerHTML = [['all', '#/', 'home', 'Home'], ['pdf', '#/pdf', 'file', 'PDF'], ['text', '#/text', 'type', 'Text'], ['fav', '#/favorites', 'star', 'Favorites'], ['settings', '#/settings', 'gear', 'Settings']].map(([k, href, ic, l]) => `<a href="${href}" class="${d === k ? 'on' : ''}"${d === k ? ' aria-current="page"' : ''}><span class="pill">${icon(ic)}</span>${l}</a>`).join('');
+}
+function focusSearch() { const q = $('#q'); if (!q) return; q.scrollIntoView({ block: 'center', behavior: 'smooth' }); setTimeout(() => q.focus({ preventScroll: true }), 280); }
+function openSearch() {
+  const onHome = !S.tool && !/^#\/(settings|favorites|history)/.test(location.hash) && $('#q');
+  if (onHome && S.home.dom === 'all' && S.home.cat === 'all') return focusSearch();
+  S.focusSearch = true; S.home.dom = 'all'; S.home.cat = 'all';
+  if (onHome) { history.replaceState(null, '', '#/'); renderHome(); } else if (location.hash === '#/' || location.hash === '') renderHome(); else location.hash = '#/';
 }
 function setChrome(t) {
-  const r = document.documentElement, st = !!(t && t.settings); r.classList.toggle('in-tool', !!t && !st); r.classList.toggle('in-settings', st);
-  if (st) { $('#barTitle').textContent = 'Settings'; document.title = `Settings — ${APP_NAME}`; }
+  const r = document.documentElement, pg = !!(t && t.settings); r.classList.toggle('in-tool', (!!t && !pg) || !!(pg && t.back)); r.classList.toggle('in-settings', pg);
+  if (pg) { const title = t.title || 'Settings'; $('#barTitle').textContent = title; if (t.back) $('#barBack').href = t.back; document.title = `${title} — ${APP_NAME}`; }
   else if (t) { $('#barTitle').textContent = t.name; $('#barBack').href = t.dom === 'pdf' ? '#/pdf' : '#/text'; document.title = `${t.name} — ${APP_NAME}`; }
   else document.title = `${APP_NAME} — ${TOOLS.length + TTOOLS.length} private PDF & text tools`;
+  const fb = $('#favBtn'); if (fb) { fb.hidden = !(t && !pg); if (t && !pg) { fb.innerHTML = icon('star'); syncFavUI(); } }
   paintNav();
 }
 function initChrome() {
   detectDevice(); let rt; const re = () => { clearTimeout(rt); rt = setTimeout(detectDevice, 120); };
   addEventListener('resize', re); addEventListener('orientationchange', re);
   $('#logoMark').innerHTML = icon('file'); $('#logoText').textContent = APP_NAME; $('#barBack').innerHTML = icon('back'); $('#privPill').innerHTML = icon('shield') + 'Files never leave your device';
-  loadCfg(); applySettings(); initI18n();
+  loadCfg(); migrateHistory(); applySettings(); initI18n();
   matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { if (CFG.mode === 'system') applySettings(); });
-  $('#themeBtn').onclick = toggleTheme; $('#setBtn').innerHTML = icon('gear');
+  $('#themeBtn').onclick = toggleTheme; $('#setBtn').innerHTML = icon('gear'); $('#searchBtn').innerHTML = icon('search'); $('#searchBtn').onclick = openSearch;
   const typing = e => /INPUT|TEXTAREA|SELECT/.test(e.tagName) && !['checkbox', 'range', 'file', 'color', 'button', 'radio'].includes(e.type);
   addEventListener('focusin', e => { if (document.documentElement.dataset.touch === '1' && typing(e.target)) document.documentElement.classList.add('kb'); });
   addEventListener('focusout', () => setTimeout(() => { if (!typing(document.activeElement || {})) document.documentElement.classList.remove('kb'); }, 60));
@@ -4024,6 +4323,7 @@ function renderHome() {
   q.onkeydown = e => { if (e.key === 'Enter') { const first = $('#catalog .card:not(.dim)'); if (first) first.click(); } };
   $('#doms').onclick = e => { const b = e.target.closest('button'); if (!b) return; S.home.dom = b.dataset.d; S.home.cat = 'all'; history.replaceState(null, '', S.home.dom === 'all' ? '#/' : '#/' + S.home.dom); paintCats(); paintCatalog(); paintNav(); };
   paintCats(); paintCatalog(); paintCarry();
+  if (S.focusSearch) { S.focusSearch = false; focusSearch(); }
 }
 function paintCarry() {
   const c = $('#carry'); if (!c) return;
@@ -4042,9 +4342,9 @@ function paintCats() {
   box.onclick = e => { const b = e.target.closest('.cat'); if (!b) return; S.home.cat = b.dataset.c; paintCats(); paintCatalog(); };
 }
 function toolCard(t) {
-  const dim = (S.carry && (t.dom !== 'pdf' || t.accept !== 'pdf')) || (S.carryText && t.dom !== 'text');
+  const dim = (S.carry && (t.dom !== 'pdf' || t.accept === 'text')) || (S.carryText && t.dom !== 'text' && t.accept !== 'text');
   const ct = catOf(t);
-  return `<a class="card${dim ? ' dim' : ''}" href="${hrefOf(t)}" style="--c:${ct.c}"><span class="ic">${icon(t.dom === 'pdf' ? t.icon : ct.i)}</span><div><h3>${esc(t.name)}</h3><p>${esc(t.desc)}</p></div>${t.isNew ? '<span class="new">NEW</span>' : ''}</a>`;
+  return `<div class="card-w"><a class="card${dim ? ' dim' : ''}" href="${hrefOf(t)}" style="--c:${ct.c}"><span class="ic">${icon(t.dom === 'pdf' ? t.icon : ct.i)}</span><div><h3>${esc(t.name)}${t.isNew ? '<span class="new">NEW</span>' : ''}</h3><p>${esc(t.desc)}</p></div></a>${favBtnHTML(t)}</div>`;
 }
 function paintCatalog() {
   const q = S.home.q.trim().toLowerCase(), { dom, cat } = S.home, hid = k => CFG.hiddenCats.includes(k);
@@ -4056,10 +4356,13 @@ function paintCatalog() {
   if (!q && cat === 'all') {
     let h = '';
     if (dom === 'all') {
-      const rec = CFG.catRecent ? getRecents().map(find).filter(Boolean).slice(0, 6) : [];
-      if (rec.length) h += `<div class="sec-h" style="margin-top:8px"><h2>Recently used</h2><hr></div><div class="grid">${rec.map(toolCard).join('')}</div>`;
+      const fav = CFG.catFavs ? getFavs().map(toolByKey).filter(Boolean) : [], favShown = fav.slice(0, 6);
+      const rec = CFG.catRecent && histOn() ? getHistTools().map(x => toolByKey(x.key)).filter(t => t && !favShown.includes(t)).slice(0, 6) : [];
+      let first = true; const gap = () => { const m = first ? 8 : 28; first = false; return m; };
+      if (favShown.length) h += `<div class="sec-h" style="margin-top:${gap()}px"><h2>Favorites</h2><span class="cnt">${fav.length}</span><hr><a class="see-all" href="#/favorites">View all</a></div><div class="grid">${favShown.map(toolCard).join('')}</div>`;
+      if (rec.length) h += `<div class="sec-h" style="margin-top:${gap()}px"><h2>Recently used</h2><hr><a class="see-all" href="#/history">View all</a></div><div class="grid">${rec.map(toolCard).join('')}</div>`;
       const pop = CFG.catPopular ? POPULAR.map(find).filter(Boolean) : [];
-      if (pop.length) h += `<div class="sec-h" style="margin-top:${rec.length ? 28 : 8}px"><h2>Popular</h2><hr></div><div class="grid">${pop.map(toolCard).join('')}</div>`;
+      if (pop.length) h += `<div class="sec-h" style="margin-top:${gap()}px"><h2>Popular</h2><hr></div><div class="grid">${pop.map(toolCard).join('')}</div>`;
     }
     if (dom !== 'text') h += (dom === 'all' ? `<div class="dom-h"><h2>PDF tools</h2><span>${list.filter(t => t.dom === 'pdf').length} tools</span></div>` : '') + sections('pdf', CATS);
     if (dom !== 'pdf') h += (dom === 'all' ? `<div class="dom-h"><h2>Text tools</h2><span>${list.filter(t => t.dom === 'text').length} tools</span></div>` : '') + sections('text', TCATS);
@@ -4070,6 +4373,7 @@ function paintCatalog() {
 /* ───────── workspace ───────── */
 function defaults(t) { const v = {}; (t.opts || []).forEach(f => { if (f.type !== 'note') v[f.k] = f.def; }); return v; }
 function cleanup() {
+  $$('.modal').forEach(m => m.remove());
   S.destroyers.forEach(f => { try { f(); } catch {} }); S.destroyers = []; S.listeners = {};
   S.files.forEach(r => { try { r.pdfjs && r.pdfjs.destroy(); } catch {} r.url && URL.revokeObjectURL(r.url); });
   S.results.forEach(r => r.url && URL.revokeObjectURL(r.url)); S.files = []; S.results = [];
@@ -4079,13 +4383,13 @@ function goText(id) { const h = '#/x/' + id; if (location.hash === h) openText(i
 
 function openTool(id) {
   const t = TOOL[id]; if (!t) { location.hash = '#/'; return; }
-  cleanup(); Object.assign(S, { tool: t, vals: defaults(t), aux: {}, st: {}, text: '', busy: false }); S.onOpt = null; setChrome(t); pushRecent(t.id);
+  cleanup(); Object.assign(S, { tool: t, vals: defaults(t), aux: {}, st: {}, text: '', busy: false }); S.onOpt = null; setChrome(t); recordTool(t);
   const cat = CATS[t.cat], solo = t.noRun && !t.opts.length;
   app.innerHTML = `<div class="wrap ws"><nav class="crumbs"><a href="#/">${icon('back')}All tools</a><span>/</span><span style="color:var(--ink2)">${esc(cat.n)}</span></nav>
     <header class="ws-head" style="--c:${cat.c}"><span class="ic">${icon(t.icon)}</span><div><h1>${esc(t.name)}</h1><p>${esc(t.desc)}</p></div></header>
     <div class="ws-grid ${solo ? 'solo' : ''}" id="wsg"><section id="main"></section><aside class="ws-side" id="side" hidden><div id="sideExtra"></div><div id="optsP"></div><div class="panel" id="runP"><button class="btn pri lg block" id="run"></button><div id="prog"></div><div id="err"></div></div><div id="results"></div></aside></div></div>`;
   $('#run').textContent = t.cta || 'Run'; $('#run').onclick = runTool; window.scrollTo(0, 0);
-  if (S.carry && t.accept === 'pdf' && matches(S.carry, 'pdf')) { const f = S.carry; S.carry = null; addFiles([f]); } else renderMain();
+  const ct = S.carryText; if (S.carry && t.accept !== 'text' && matches(S.carry, t.accept)) { const f = S.carry; S.carry = null; addFiles([f]); } else { renderMain(); if (ct && t.textInput) { S.carryText = null; S.text = ct.text; const ta = $('#txt'); if (ta) ta.value = ct.text; if (ct.name) recordFile(new File([ct.text], ct.name, { type: 'text/plain' }), { dom: 'pdf', tool: t.id, kind: 'text' }); } }
 }
 
 function dropHTML(t, compact) {
@@ -4104,10 +4408,11 @@ async function addFiles(list) {
   const t = S.tool; if (!t) return; list = [...list];
   for (const f of list) {
     if (!matches(f, t.accept)) { toast(`“${f.name}” isn't a ${NAMES[t.accept]} file`, 'err'); continue; }
-    if (t.accept === 'text') { S.text = await f.text(); const ta = $('#txt'); if (ta) ta.value = S.text; continue; }
+    if (t.accept === 'text') { S.text = await f.text(); const ta = $('#txt'); if (ta) ta.value = S.text; recordFile(f, { dom: 'pdf', tool: t.id, kind: 'text' }); continue; }
     if (!t.multi) { S.files.forEach(r => { try { r.pdfjs && r.pdfjs.destroy(); } catch {} r.url && URL.revokeObjectURL(r.url); }); S.files = []; S.results = []; }
     const rec = { id: ++uid, file: f, name: f.name, size: f.size, type: f.type, range: '' }; S.files.push(rec);
     if (t.accept === 'pdf') await probePdf(rec); else { rec.url = URL.createObjectURL(f); rec.pages = 1; }
+    if (!rec.error) recordFile(f, { dom: 'pdf', tool: t.id, kind: t.accept === 'image' ? 'image' : 'pdf' });
     if (!t.multi) break;
   }
   renderMain();
@@ -4258,15 +4563,15 @@ function showResults(r) {
     const d = e.target.closest('[data-dl]'); if (d) { const x = S.results[+d.dataset.dl]; download(x.blob, x.name); }
     const pv = e.target.closest('[data-pv]'); if (pv) window.open(S.results[+pv.dataset.pv].url, '_blank');
     if (e.target.closest('[data-zip]')) { const z = new JSZip(); S.results.forEach(x => z.file(x.name, x.blob)); const b = await z.generateAsync({ type: 'blob', compression: 'DEFLATE' }); download(b, (S.files[0] ? baseName(S.files[0].name) : 'results') + '.zip'); }
-    if (e.target.closest('[data-reuse]')) { addFiles([new File([S.results[0].blob], S.results[0].name, { type: 'application/pdf' })]); }
+    if (e.target.closest('[data-reuse]')) { const nf = new File([S.results[0].blob], S.results[0].name, { type: 'application/pdf' }); nf._gen = true; addFiles([nf]); }
   };
-  const ch = $('#chain'); if (ch) ch.onchange = () => { if (!ch.value) return; S.carry = new File([S.results[0].blob], S.results[0].name, { type: 'application/pdf' }); go(ch.value); };
+  const ch = $('#chain'); if (ch) ch.onchange = () => { if (!ch.value) return; S.carry = new File([S.results[0].blob], S.results[0].name, { type: 'application/pdf' }); S.carry._gen = true; go(ch.value); };
 }
 
 /* ───────── routing, drag & drop, boot ───────── */
 function route() {
   const h = location.hash, m = h.match(/^#\/t\/([\w-]+)/), x = h.match(/^#\/x\/([\w-]+)/);
-  if (m) openTool(m[1]); else if (x) openText(x[1]); else if (h === '#/settings') openSettings(); else { S.home.dom = h === '#/pdf' ? 'pdf' : h === '#/text' ? 'text' : (!S.started ? (CFG.defaultTab || 'all') : 'all'); S.home.cat = 'all'; renderHome(); }
+  if (m) openTool(m[1]); else if (x) openText(x[1]); else if (inSet()) openSettings(h.split('/')[2]); else if (h === '#/favorites' || h === '#/history') openFavorites(h === '#/history' ? 'history' : 'fav'); else { S.home.dom = h === '#/pdf' ? 'pdf' : h === '#/text' ? 'text' : (!S.started ? (CFG.defaultTab || 'all') : 'all'); S.home.cat = 'all'; renderHome(); }
   S.started = true;
   window.scrollTo(0, 0);
 }
