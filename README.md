@@ -574,7 +574,7 @@ T('case', 'myTool', 'My Tool', 'What it does',
 - [x] Android Application
 - [x] Favourite / pinned tools
 - [x] Restructure Settings
-- [ ] Backup & restore for settings, favorites and history
+- [x] Backup & restore for settings, favorites and history
 - [ ] Fix Light Mode / about setting
 - [ ] Premium UI and design / Animation 
 - [ ] OCR for scanned PDFs
