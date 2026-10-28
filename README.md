@@ -494,7 +494,6 @@ Open **Settings** (gear icon on desktop, bottom bar on phones). The main menu ha
 | **History & favorites** | Save history on/off · keep copies of opened files on/off · favorites row on home · clear history · clear favorites · Backup and Restore *(coming soon)* · **Reset settings** |
 | **About** | App name and tool count |
 
-**Rename the app:** change `const APP_NAME = 'DocKit';` at the top of `src/core.js` (and the `<title>` in `src/head.html`), then run `python3 build.py`.
 
 
 ## Privacy & limitations
@@ -510,8 +509,8 @@ DocKit never sends your files or text anywhere. A few things worth knowing:
 - Material You cannot read your phone wallpaper (browsers don't allow it), so you pick a seed colour instead.
 
 ## Tech stack
-
-DocKit is plain HTML, CSS and JavaScript — no framework, and no build step needed to *use* it.
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white) 
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
 
 | Library | Used for | License |
 | --- | --- | --- |
